@@ -1,0 +1,11 @@
+TIKTOK_URL = "https://www.tiktok.com/foryou"
+SCAN_INTERVAL_MINUTES = 1
+VIDEOS_PER_RUN = 5
+
+SCAM_SCORE_THRESHOLD = 2
+GOOGLE_SHEET_NAME = "TikTok Scam Log"
+CREDENTIALS_FILE = "credentials.json"
+COOKIES_FILE = "tiktok_cookies.json"
+HEADLESS = False
+PAGE_LOAD_WAIT_MS = 4000
+SCROLL_WAIT_MS = 2500 
