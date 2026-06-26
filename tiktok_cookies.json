@@ -419,7 +419,7 @@
         "httpOnly": true,
         "name": "tt_csrf_token",
         "path": "/",
-        "sameSite": "lax",
+        "sameSite": "Lax",
         "secure": true,
         "session": true,
         "storeId": null,

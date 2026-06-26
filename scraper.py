@@ -5,6 +5,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 
 import json
+import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
@@ -16,7 +17,8 @@ from config import (
     COOKIES_FILE,
     HEADLESS,
     PAGE_LOAD_WAIT_MS,
-    SCROLL_WAIT_MS
+    SCROLL_WAIT_MS,
+    USER_DATA_DIR
 )
 
 
@@ -27,22 +29,21 @@ class TikTokScraper:
         print(f"\n[{timestamp}] ── Starting scan ──────────────────────────────")
 
         with sync_playwright() as p:
-            browser, context, page = self._launch_browser(p)
+            context, _, page = self._launch_browser(p)
 
             try:
                 self._open_tiktok(page)
                 self._scroll_and_scan(page)
             finally:
-                browser.close()
+                context.close()  # close context, not browser
 
         total = get_log_count()
         print(f"[{datetime.now().strftime('%H:%M:%S')}] ── Scan complete. Total logged: {total} ────────────\n")
 
-
     def _launch_browser(self, playwright):
-        browser = playwright.chromium.launch(headless=HEADLESS)
-
-        context = browser.new_context(
+        context = playwright.chromium.launch_persistent_context(
+            user_data_dir=USER_DATA_DIR,
+            headless=HEADLESS,
             user_agent=(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -54,8 +55,7 @@ class TikTokScraper:
         self._load_cookies(context)
 
         page = context.new_page()
-        return browser, context, page
-
+        return context, context, page  # no separate browser object
 
     def _open_tiktok(self, page):
         print(f"  [BROWSER] Opening {TIKTOK_URL} ...")
@@ -95,11 +95,19 @@ class TikTokScraper:
 
     def _extract_video_data(self, page) -> dict | None:
         try:
-            description = self._safe_text(page, "[data-e2e='browse-video-desc']")
-            author      = self._safe_text(page, "[data-e2e='browse-username']")
-            likes       = self._safe_text(page, "[data-e2e='browse-like-count']")
-            comments    = self._safe_text(page, "[data-e2e='browse-comment-count']")
-            shares      = self._safe_text(page, "[data-e2e='browse-share-count']")
+            
+            page.wait_for_selector("[data-e2e='desc-span-0']", timeout=10000)
+            
+            # data-e2e subject to change, if they do then inspect tiktok page
+            description = self._safe_text(page, "[data-e2e='desc-span-0']")
+            author      = self._safe_text(page, "[data-e2e='username']")
+            likes       = self._safe_text(page, "[data-e2e='like-count']")
+            comments    = self._safe_text(page, "[data-e2e='comment-count']")
+            shares      = self._safe_text(page, "[data-e2e='share-count']")
+            
+            print(description)
+            print(author)
+            print(likes)
 
             return {
                 "url":         page.url,
@@ -132,24 +140,44 @@ class TikTokScraper:
 
 
     def _load_cookies(self, context):
+        flag_file = "./browser_profile/.cookies_loaded"
+        
+        # If we've already seeded cookies before, skip
+        if os.path.exists(flag_file):
+            print("  [AUTH] Using existing browser profile ✓")
+            return
+
         try:
             with open(COOKIES_FILE, "r", encoding="utf-8-sig") as f:
                 cookies = json.load(f)
 
-            # Playwright only accepts "Strict", "Lax", or "None" — fix nulls
+            SAME_SITE_MAP = {
+                "no_restriction": "None",
+                "lax":            "Lax",
+                "strict":         "Strict",
+                "none":           "None",
+            }
+
             for cookie in cookies:
-                if cookie.get("sameSite") not in ("Strict", "Lax", "None"):
-                    cookie["sameSite"] = "Lax"
-                # "None" requires secure=True or Playwright rejects it
-                if cookie.get("sameSite") == "None":
+                raw = (cookie.get("sameSite") or "").lower()
+                cookie["sameSite"] = SAME_SITE_MAP.get(raw, "Lax")
+                if cookie["sameSite"] == "None":
                     cookie["secure"] = True
+                cookie.pop("storeId", None)
+                cookie.pop("hostOnly", None)
+                cookie.pop("session", None)
+
             context.add_cookies(cookies)
-            print(f"  [AUTH] Cookies loaded from '{COOKIES_FILE}' ✓")
+
+            # Mark that we've seeded the profile
+            os.makedirs("./browser_profile", exist_ok=True)
+            open(flag_file, "w").close()
+
+            print(f"  [AUTH] Cookies seeded into browser profile ✓")
         except FileNotFoundError:
             print(f"  [WARN] '{COOKIES_FILE}' not found — running without login.")
         except json.JSONDecodeError:
-            print(f"  [ERROR] '{COOKIES_FILE}' is not valid JSON. Re-export your cookies.")
-
+            print(f"  [ERROR] '{COOKIES_FILE}' is not valid JSON.")
 
     def _safe_text(self, page, selector: str, timeout: int = 3000) -> str:
         try:

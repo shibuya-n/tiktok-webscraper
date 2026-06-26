@@ -24,14 +24,43 @@ SCAM_HASHTAGS = [
     "#earnmoneyonline",
 ]
 
+def parse_count(value: str) -> int: 
+    # converts values like 12.3M or 13K to integer values
+
+    value = value.strip().upper().replace(",","")
+
+    if not value: 
+        return 0
+    try: 
+        if value.endswith("M"):
+            return int(float(value[:-1])*1_000_000)
+        if value.endswith("K"):
+            return int(float(value[:-1]) * 1_000)
+        return int(float(value))
+    except ValueError:
+        return 0
+
 def score_video(video_data: dict) -> int:
+    sum_score = 0 
     text = (
         video_data.get("description", "") + " " +
         video_data.get("author", "")
     ).lower()
     keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
     hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in text)
-    return keyword_score + hashtag_score
+
+    likes = parse_count(video_data.get("likes", ""))
+    comments = parse_count(video_data.get("comments", ""))
+    shares = parse_count(video_data.get("shares", ""))
+
+    if likes < 5000 : 
+        sum_score += 1
+    if comments < 25 : 
+        sum_score += 1
+    if shares < 10 : 
+        sum_score += 1
+
+    return sum_score + keyword_score + hashtag_score
 
 def is_scam(video_data: dict) -> bool:
     return score_video(video_data) >= SCAM_SCORE_THRESHOLD

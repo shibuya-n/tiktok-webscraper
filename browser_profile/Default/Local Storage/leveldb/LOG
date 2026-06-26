@@ -1,0 +1,13 @@
+2026/06/25-18:00:30.972 41d8 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/06/25-18:00:30.979 41d8 Recovering log #13
+2026/06/25-18:00:30.980 41d8 Level-0 table #15: started
+2026/06/25-18:00:30.988 41d8 Level-0 table #15: 46534 bytes OK
+2026/06/25-18:00:30.997 41d8 Delete type=0 #13
+2026/06/25-18:00:30.999 27a8 Compacting 4@0 + 0@1 files
+2026/06/25-18:00:31.076 27a8 Generated table #17@0: 46 keys, 46863 bytes
+2026/06/25-18:00:31.076 27a8 Compacted 4@0 + 0@1 files => 46863 bytes
+2026/06/25-18:00:31.087 27a8 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/06/25-18:00:31.093 27a8 Delete type=2 #7
+2026/06/25-18:00:31.093 27a8 Delete type=2 #9
+2026/06/25-18:00:31.094 27a8 Delete type=2 #12
+2026/06/25-18:00:31.109 27a8 Delete type=2 #15
