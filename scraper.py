@@ -94,25 +94,20 @@ class TikTokScraper:
 
 
     def _extract_video_data(self, page) -> dict | None:
-        try:
-            
-            page.wait_for_selector("[data-e2e='desc-span-0']", timeout=10000)
-            
+        try:         
             # data-e2e subject to change, if they do then inspect tiktok page
             description = self._safe_text(page, "[data-e2e='desc-span-0']")
-            author      = self._safe_text(page, "[data-e2e='username']")
+            hashtags = self._get_hashtags(page)
+            author      = self._get_author(page)
             likes       = self._safe_text(page, "[data-e2e='like-count']")
             comments    = self._safe_text(page, "[data-e2e='comment-count']")
             shares      = self._safe_text(page, "[data-e2e='share-count']")
-            
-            print(description)
-            print(author)
-            print(likes)
 
             return {
                 "url":         page.url,
                 "author":      author,
                 "description": description,
+                "hashtags": hashtags,
                 "likes":       likes,
                 "comments":    comments,
                 "shares":      shares,
@@ -141,12 +136,22 @@ class TikTokScraper:
 
     def _load_cookies(self, context):
         flag_file = "./browser_profile/.cookies_loaded"
-        
-        # If we've already seeded cookies before, skip
+
         if os.path.exists(flag_file):
-            print("  [AUTH] Using existing browser profile ✓")
+            # Profile exists — check if session is still valid
+            existing = context.cookies("https://www.tiktok.com")
+            session_cookie = next((c for c in existing if c["name"] == "sessionid"), None)
+
+            if session_cookie:
+                print("  [AUTH] Browser profile loaded with valid session ✓")
+            else:
+                print("  [WARN] Browser profile exists but session expired — re-seeding cookies.")
+                os.remove(flag_file)
+                
+                self._load_cookies(context)  # retry with fresh cookies
             return
 
+        # First time — seed from cookie file
         try:
             with open(COOKIES_FILE, "r", encoding="utf-8-sig") as f:
                 cookies = json.load(f)
@@ -167,15 +172,19 @@ class TikTokScraper:
                 cookie.pop("hostOnly", None)
                 cookie.pop("session", None)
 
+            # Drop feed cache so TikTok doesn't repeat videos
+            cookies = [c for c in cookies if c.get("name") != "perf_feed_cache"]
+
             context.add_cookies(cookies)
 
-            # Mark that we've seeded the profile
             os.makedirs("./browser_profile", exist_ok=True)
             open(flag_file, "w").close()
 
             print(f"  [AUTH] Cookies seeded into browser profile ✓")
+
         except FileNotFoundError:
             print(f"  [WARN] '{COOKIES_FILE}' not found — running without login.")
+            print(f"  [WARN] Run setup_profile.py to log in manually.")
         except json.JSONDecodeError:
             print(f"  [ERROR] '{COOKIES_FILE}' is not valid JSON.")
 
@@ -183,4 +192,21 @@ class TikTokScraper:
         try:
             return page.locator(selector).first.inner_text(timeout=timeout).strip()
         except Exception:
+            return ""
+    def _get_author(self, page) -> str:
+        try:
+            anchor = page.locator("[class*='DivCreatorInfoContainer'] a[href^='/@']").first
+            href = anchor.get_attribute("href", timeout=3000)
+            return href.split("/@")[-1].split("/")[0]
+        except Exception:
+            return ""
+    def _get_hashtags(self, page) -> list: 
+        try: 
+            anchors = page.locator("[data-e2e='search-common-link']").all()
+            hashtags = []
+            for anchor in anchors: 
+                hashtags.append(anchor)
+            
+            return hashtags
+        except Exception: 
             return ""
