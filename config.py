@@ -8,5 +8,7 @@ CREDENTIALS_FILE = "credentials.json"
 COOKIES_FILE = "tiktok_cookies.json"
 HEADLESS = False
 PAGE_LOAD_WAIT_MS = 4000
-SCROLL_WAIT_MS = 2500 
+SCROLL_WAIT_MS = 8000
 USER_DATA_DIR = "./browser_profile"
+
+DELAY_BETWEEN_VIDEOS_MS = 8000

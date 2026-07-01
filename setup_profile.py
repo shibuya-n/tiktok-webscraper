@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 USER_DATA_DIR = "./browser_profile"
 
 with sync_playwright() as p:
-    context = playwright.chromium.launch_persistent_context(
+    context = p.chromium.launch_persistent_context(
         user_data_dir=USER_DATA_DIR,
         headless=False,
         user_agent=(

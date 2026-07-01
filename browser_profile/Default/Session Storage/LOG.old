@@ -1,3 +1,17 @@
-2026/06/25-20:18:30.974 6e08 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
-2026/06/25-20:18:30.975 6e08 Recovering log #4
-2026/06/25-20:18:30.978 6e08 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/000004.log 
+2026/06/30-17:17:54.626 6d14 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
+2026/06/30-17:17:54.629 6d14 Recovering log #15
+2026/06/30-17:17:54.630 6d14 Level-0 table #18: started
+2026/06/30-17:17:54.636 6d14 Level-0 table #18: 23942 bytes OK
+2026/06/30-17:17:54.637 6d14 Recovering log #18
+2026/06/30-17:17:54.639 6d14 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/000018.log 
+2026/06/30-17:17:54.656 6d14 Delete type=0 #15
+2026/06/30-17:17:54.656 6d14 Delete type=2 #19
+2026/06/30-17:17:54.657 7974 Compacting 4@0 + 1@1 files
+2026/06/30-17:17:54.665 7974 Generated table #19@0: 1346 keys, 17208 bytes
+2026/06/30-17:17:54.665 7974 Compacted 4@0 + 1@1 files => 17208 bytes
+2026/06/30-17:17:54.667 7974 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/06/30-17:17:54.667 7974 Delete type=2 #8
+2026/06/30-17:17:54.667 7974 Delete type=2 #10
+2026/06/30-17:17:54.667 7974 Delete type=2 #13
+2026/06/30-17:17:54.668 7974 Delete type=2 #16
+2026/06/30-17:17:54.668 7974 Delete type=2 #18
