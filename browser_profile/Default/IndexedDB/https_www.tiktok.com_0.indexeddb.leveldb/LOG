@@ -1,3 +1,5 @@
-2026/07/02-16:19:24.228 5fa0 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/02-16:19:24.228 5fa0 Recovering log #20
-2026/07/02-16:19:24.238 5fa0 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000020.log 
+2026/07/02-19:00:04.463 4448 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/02-19:00:04.464 4448 Recovering log #32
+2026/07/02-19:00:04.484 4448 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000032.log 
+2026/07/02-19:00:04.484 4448 Delete type=2 #30
+2026/07/02-19:00:04.484 4448 Delete type=2 #33

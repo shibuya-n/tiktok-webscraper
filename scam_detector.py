@@ -1,4 +1,9 @@
 from config import SCAM_SCORE_THRESHOLD
+import re 
+
+PHONE_REGEX = re.compile(
+    r'(\+?\d[\d\s\-().]{7,}\d)'
+)
 
 SCAM_KEYWORDS = [
     "free money", "giveaway", "click the link", "dm me",
@@ -65,6 +70,9 @@ def score_video(video_data: dict) -> int:
     likes = parse_count(video_data.get("likes", ""))
     comments = parse_count(video_data.get("comments", ""))
     shares = parse_count(video_data.get("shares", ""))
+    
+    if has_phone_number(video_data.get("description", "")):
+        sum_score += 3
 
     if likes < 1000 : 
         sum_score += 1
@@ -80,8 +88,12 @@ def score_account(score: int, video_data: dict) -> int:
     text = (video_data.get("bio", "")).lower()
     keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
     hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in text)
+    sum_score += keyword_score + hashtag_score
     
     link = (video_data.get("bio_link", "")).lower()
+    
+    if has_phone_number(video_data.get("bio", "")):
+        sum_score += 3
     
     if link: 
         link_score = sum(2 for kw in SUSPICIOUS_LINK_KEYWORDS if kw in link_lower)
@@ -104,6 +116,10 @@ def get_scam_reasons(video_data: dict) -> list:
     for ht in SCAM_HASHTAGS:
         if ht.lower() in text:
             reasons.append(f"Hashtag: '{ht}'")
+    if has_phone_number(video_data.get("description", "")):
+        reasons.append("Phone number in description")
+    if has_phone_number(video_data.get("bio", "")):
+        reasons.append("Phone number in bio")
     return reasons
 
 def get_score_label(score: int) -> str:
@@ -117,3 +133,6 @@ def get_score_label(score: int) -> str:
         return "Probable Scam"
     else:
         return "Almost Certainly a Scam"
+
+def has_phone_number(text: str) -> bool:
+    return bool(PHONE_REGEX.search(text))

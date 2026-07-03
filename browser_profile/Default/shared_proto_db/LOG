@@ -1,3 +1,6 @@
-2026/07/02-16:19:24.127 5fa0 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\shared_proto_db/MANIFEST-000001
-2026/07/02-16:19:24.127 5fa0 Recovering log #3
-2026/07/02-16:19:24.129 5fa0 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\shared_proto_db/000003.log 
+2026/07/02-19:00:04.357 4dd8 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\shared_proto_db/MANIFEST-000001
+2026/07/02-19:00:04.358 4dd8 Recovering log #3
+2026/07/02-19:00:04.360 4dd8 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\shared_proto_db/000003.log 
+2026/07/02-19:00:04.362 4448 Level-0 table #5: started
+2026/07/02-19:00:04.395 4448 Level-0 table #5: 71902 bytes OK
+2026/07/02-19:00:04.404 4448 Delete type=0 #3

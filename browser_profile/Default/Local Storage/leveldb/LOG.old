@@ -1,14 +1,7 @@
-2026/07/02-16:18:56.994 5f14 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/02-16:18:56.999 5f14 Recovering log #245
-2026/07/02-16:18:57.000 5f14 Level-0 table #247: started
-2026/07/02-16:18:57.007 5f14 Level-0 table #247: 48711 bytes OK
-2026/07/02-16:18:57.012 5f14 Delete type=0 #245
-2026/07/02-16:18:57.012 9104 Compacting 4@0 + 1@1 files
-2026/07/02-16:18:57.022 9104 Generated table #249@0: 63 keys, 46949 bytes
-2026/07/02-16:18:57.022 9104 Compacted 4@0 + 1@1 files => 46949 bytes
-2026/07/02-16:18:57.024 9104 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/07/02-16:18:57.024 9104 Delete type=2 #236
-2026/07/02-16:18:57.024 9104 Delete type=2 #238
-2026/07/02-16:18:57.025 9104 Delete type=2 #241
-2026/07/02-16:18:57.025 9104 Delete type=2 #244
-2026/07/02-16:18:57.025 9104 Delete type=2 #247
+2026/07/02-18:57:50.178 6e30 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/02-18:57:50.182 6e30 Recovering log #265
+2026/07/02-18:57:50.182 6e30 Level-0 table #267: started
+2026/07/02-18:57:50.188 6e30 Level-0 table #267: 57861 bytes OK
+2026/07/02-18:57:50.188 6e30 Recovering log #266
+2026/07/02-18:57:50.190 6e30 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000266.log 
+2026/07/02-18:57:50.192 6e30 Delete type=0 #265
