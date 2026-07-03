@@ -12,6 +12,9 @@ SCAM_KEYWORDS = [
     "i made $", "you can too", "easy money", "instant profit",
     "follow for more tips", "link in bio", "message me",
     "sign up now", "limited spots", "only a few left",
+    
+    
+    
 ]
 
 SCAM_HASHTAGS = [
@@ -22,6 +25,15 @@ SCAM_HASHTAGS = [
     "#forextrader", "#binaryoptions", "#moneytips",
     "#wealthmindset", "#millionairemindset", "#hustle",
     "#earnmoneyonline",
+    
+    ## hashtags found after manual scraping 
+    "#watch", "#watches", "#luxury", "#fashion", "",
+]
+
+SUSPICIOUS_LINK_KEYWORDS = [
+    "whatsapp", "t.me", "telegram", "wa.me", "wechat",
+    "discord", "linktr.ee", "beacons.ai", "urlgeni",
+    "bit.ly", "tinyurl", "shorturl",
 ]
 
 def parse_count(value: str) -> int: 
@@ -47,20 +59,35 @@ def score_video(video_data: dict) -> int:
         video_data.get("author", "")
     ).lower()
     keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
-    hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in text)
+    hashtag_text = " ".join(video_data.get("hashtags", [])).lower()
+    hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in hashtag_text)
 
     likes = parse_count(video_data.get("likes", ""))
     comments = parse_count(video_data.get("comments", ""))
     shares = parse_count(video_data.get("shares", ""))
 
-    if likes < 5000 : 
+    if likes < 1000 : 
         sum_score += 1
-    if comments < 25 : 
+    if comments < 15 : 
         sum_score += 1
-    if shares < 10 : 
+    if shares < 5 : 
         sum_score += 1
 
     return sum_score + keyword_score + hashtag_score
+
+def score_account(score: int, video_data: dict) -> int: 
+    sum_score = score
+    text = (video_data.get("bio", "")).lower()
+    keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
+    hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in text)
+    
+    link = (video_data.get("bio_link", "")).lower()
+    
+    if link: 
+        link_score = sum(2 for kw in SUSPICIOUS_LINK_KEYWORDS if kw in link_lower)
+        sum_score += link_score 
+
+
 
 def is_scam(video_data: dict) -> bool:
     return score_video(video_data) >= SCAM_SCORE_THRESHOLD

@@ -127,12 +127,26 @@ class TikTokScraper:
             last_seen = fingerprint
 
             print(f"  Author : {video_data['author'] or 'Unknown'}")
-            print(f"  Caption: {video_data['description'][:80] or 'No caption'}...")
+            print(f"  Caption: {video_data['description'][:100] or 'No caption'}...")
             print(f"  AD? : {video_data['isAd']}")
 
             score  = score_video(video_data)
             label  = get_score_label(score)
             print(f"  Score  : {score} ({label})")
+            
+            #check if worth checking account bio 
+            if is_scam(video_data) >= 0: 
+                account = self._extract_account_page(page, video_data["author"])
+                
+                # add to video data dict
+                video_data["bio"] = account.get("bio", "")
+                video_data["bio_link"] = account.get("bio_link", "")
+                print(f"  Bio: {video_data['bio'][:100] or 'None'}")
+                print(f"  Bio Link: {video_data['bio_link'] or 'None'}")
+                
+                
+              
+                
 
             if is_scam(video_data):
                 reasons = get_scam_reasons(video_data)
@@ -145,7 +159,6 @@ class TikTokScraper:
             page.wait_for_timeout(DELAY_BETWEEN_VIDEOS_MS)
 
             self._scroll_to_next(page)
-
 
     def _extract_video_data(self, page) -> dict | None:
         try:
@@ -162,7 +175,7 @@ class TikTokScraper:
                 "url":         page.url,
                 "author":      author,
                 "description": description,
-                "hashtags": hashtags,
+                "hashtags":    hashtags,
                 "likes":       likes,
                 "comments":    comments,
                 "shares":      shares,
@@ -257,6 +270,27 @@ class TikTokScraper:
             # count animating in) before extraction reads the page.
             page.wait_for_timeout(300)
 
+    def _extract_account_page(self, page, author: str) -> dict | None: 
+        if not author: 
+            return ""
+        try: 
+            profile_url = f"https://www.tiktok.com/@{author}"
+            new_page = page.context.new_page()
+            new_page.goto(profile_url)
+            new_page.wait_for_timeout(3000)
+            
+            bio = self._extract_account_page(self, page, author) 
+            link = self._get_bio_link(new_page)
+            new_page.close()
+            return { 
+                    "bio": bio,
+                    "bio_link": link 
+            }
+        except Exception as e: 
+            print(f"    [WARN] Could not scrape account page: {e}")
+            return {}
+            
+    
     def _load_cookies(self, context):
         flag_file = "./browser_profile/.cookies_loaded"
 
@@ -337,7 +371,28 @@ class TikTokScraper:
             return " ".join((text or "").split())
         except Exception:
             return ""
+        
+    def _extract_account_page(self, page, author: str) -> dict:
+        if not author:
+            return {}
+        try:
+            profile_url = f"https://www.tiktok.com/@{author}"
+            new_page = page.context.new_page()
+            new_page.goto(profile_url)
+            new_page.wait_for_timeout(3000)
 
+            try:
+                bio = new_page.locator("[data-e2e='user-bio']").first.inner_text(timeout=3000)
+            except:
+                bio = ""
+
+            link = self._get_bio_link(new_page)
+            new_page.close()
+
+            return {"bio": bio.strip(), "bio_link": link}
+        except Exception as e:
+            print(f"    [WARN] Could not scrape account page: {e}")
+            return {}
     def _find_ad(self, page) -> bool:
         # Fixed two bugs from the previous version:
         #   1. `self._find_ad` (no call) was passed instead of `self._find_ad(page)`
@@ -390,17 +445,19 @@ class TikTokScraper:
 
     def _get_hashtags(self, page) -> list:
         try:
-            tags = page.evaluate(
+            tags = page.locator("a[href*='/tag/']").all_inner_texts()
+            return [t.strip() for t in tags if t.strip()]
+        except:
+            return []
+        
+    def _get_bio_link(self, page) -> str:
+        try:
+            link = page.evaluate(
                 """() => {
-                    const els = [...document.querySelectorAll("[data-e2e='search-common-link']")];
-                    return els.filter(el => {
-                        const r = el.getBoundingClientRect();
-                        return r.width > 0 && r.height > 0 &&
-                            r.top < window.innerHeight && r.bottom > 0 &&
-                            r.left < window.innerWidth && r.right > 0;
-                    }).map(el => (el.innerText || "").trim()).filter(Boolean);
+                    const el = document.querySelector("[data-e2e='user-link']");
+                    return el ? el.getAttribute('href') : "";
                 }"""
             )
-            return tags or []
+            return link or ""
         except Exception:
-            return []
+            return ""
