@@ -20,7 +20,8 @@ from config import (
     HEADLESS,
     PAGE_LOAD_WAIT_MS,
     SCROLL_WAIT_MS,
-    USER_DATA_DIR
+    USER_DATA_DIR,
+    SCAM_SCORE_THRESHOLD
 )
 
 
@@ -106,6 +107,13 @@ class TikTokScraper:
             print(f"\n  ── Video {i + 1}/{VIDEOS_PER_RUN} ──────────────────")
 
             video_data = self._extract_video_data(page)
+            
+            if self._is_live(page):
+                print("  [SKIP] Live video — skipping.")
+                page.wait_for_timeout(DELAY_BETWEEN_VIDEOS_MS)
+                self._scroll_to_next(page)
+                continue
+
 
             if not video_data:
                 print("  [SKIP] Could not extract video data. Moving on.")
@@ -135,20 +143,22 @@ class TikTokScraper:
             print(f"  Score  : {score} ({label})")
             
             #check if worth checking account bio 
-            if is_scam(video_data) >= 0: 
+            if is_scam(video_data) > 0: 
                 account = self._extract_account_page(page, video_data["author"])
                 
                 # add to video data dict
-                video_data["bio"] = account.get("bio", "")
-                video_data["bio_link"] = account.get("bio_link", "")
-                print(f"  Bio: {video_data['bio'][:100] or 'None'}")
-                print(f"  Bio Link: {video_data['bio_link'] or 'None'}")
+                video_data.update(account) 
                 
+                print(f"  Bio: {video_data.get('bio', '')[:100] or 'None'}")
+                print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
+                print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
+                print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
+
                 
               
                 
 
-            if is_scam(video_data):
+            if is_scam(video_data) >= SCAM_SCORE_THRESHOLD:
                 reasons = get_scam_reasons(video_data)
                 print(f"  ⚠️  FLAGGED — Reasons: {', '.join(reasons)}")
                 #self._like_video(page)
@@ -170,6 +180,8 @@ class TikTokScraper:
             comments    = self._safe_text(page, "[data-e2e='comment-count']")
             shares      = self._safe_text(page, "[data-e2e='share-count']")
             isAd        = self._find_ad(page)
+     
+            
 
             return {
                 "url":         page.url,
@@ -180,7 +192,12 @@ class TikTokScraper:
                 "comments":    comments,
                 "shares":      shares,
                 "isAd":        isAd,
+
+                
+                
+                
                 "timestamp":   datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
             }
 
         except Exception as e:
@@ -190,13 +207,53 @@ class TikTokScraper:
 
     def _like_video(self, page):
         try:
-            like_btn = page.locator("[data-e2e='browse-like-icon']").first
-            like_btn.click()
+            index = page.evaluate(
+                """(sel) => {
+                    const els = [...document.querySelectorAll(sel)];
+                    return els.findIndex(el => {
+                        const r = el.getBoundingClientRect();
+                        return r.width > 0 && r.height > 0 &&
+                            r.top < window.innerHeight && r.bottom > 0 &&
+                            r.left < window.innerWidth && r.right > 0;
+                    });
+                }""",
+                "[data-e2e='like-icon']"
+            )
+
+            if index == -1:
+                print("  [WARN] Could not find like icon in viewport.")
+                return
+
+            like_btn = page.locator("[data-e2e='like-icon']").nth(index)
+            box = like_btn.bounding_box()
+            if not box:
+                print("  [WARN] Could not get bounding box for like icon.")
+                return
+
+            x = box["x"] + box["width"] / 2
+            y = box["y"] + box["height"] / 2
+
+            page.mouse.move(x, y)
+            page.mouse.down()
+            page.wait_for_timeout(500)   # let TikTok's re-render settle before mouseup
+            page.mouse.up()
+            
+            liked = page.evaluate(
+                """(sel) => {
+                    const el = document.querySelector(sel);
+                    return el ? el.getAttribute('aria-pressed') === 'true' : false;
+                }""",
+                "[data-e2e='like-icon']"
+            )
+            if liked:
+                print("  [LIKED] Like confirmed ✓")
+            else:
+                print("  [WARN] Like click sent but state doesn't show as liked.")
+
             page.wait_for_timeout(1000)
             print("  [LIKED] Like sent ✓")
         except Exception as e:
             print(f"  [ERROR] Could not like video: {e}")
-
 
     def _scroll_to_next(self, page, max_attempts: int = 3):
         # Poll using the EXACT same selectors _extract_video_data relies on,
@@ -269,27 +326,6 @@ class TikTokScraper:
             # Small settle buffer for any last-mile re-render (e.g. like
             # count animating in) before extraction reads the page.
             page.wait_for_timeout(300)
-
-    def _extract_account_page(self, page, author: str) -> dict | None: 
-        if not author: 
-            return ""
-        try: 
-            profile_url = f"https://www.tiktok.com/@{author}"
-            new_page = page.context.new_page()
-            new_page.goto(profile_url)
-            new_page.wait_for_timeout(3000)
-            
-            bio = self._extract_account_page(self, page, author) 
-            link = self._get_bio_link(new_page)
-            new_page.close()
-            return { 
-                    "bio": bio,
-                    "bio_link": link 
-            }
-        except Exception as e: 
-            print(f"    [WARN] Could not scrape account page: {e}")
-            return {}
-            
     
     def _load_cookies(self, context):
         flag_file = "./browser_profile/.cookies_loaded"
@@ -386,10 +422,18 @@ class TikTokScraper:
             except:
                 bio = ""
 
-            link = self._get_bio_link(new_page)
+            link          = self._get_bio_link(new_page)
+            followers     = self._safe_text(new_page, "[data-e2e='followers-count']")
+            total_likes   = self._safe_text(new_page, "[data-e2e='likes-count']")
+
             new_page.close()
 
-            return {"bio": bio.strip(), "bio_link": link}
+            return {
+                "bio": bio.strip(),
+                "bio_link": link,
+                "total_followers": followers,
+                "total_likes": total_likes,
+            }
         except Exception as e:
             print(f"    [WARN] Could not scrape account page: {e}")
             return {}
@@ -416,7 +460,28 @@ class TikTokScraper:
             ))
         except Exception:
             return False
+    def _is_live(self, page) -> bool:
+        try:
+            return bool(page.evaluate(
+                """() => {
+                    const anchors = [...document.querySelectorAll("a[href*='/live']")];
+                    return anchors.some(a => {
+                        const r = a.getBoundingClientRect();
+                        const inViewport = r.width > 0 && r.height > 0 &&
+                            r.top < window.innerHeight && r.bottom > 0 &&
+                            r.left < window.innerWidth && r.right > 0;
+                        if (!inViewport) return false;
 
+                        const href = a.getAttribute('href') || '';
+                        const isLivePath = /\\/@[^/]+\\/live(\\?|$)/.test(href);
+                        const isLiveTarget = a.getAttribute('target') === 'tiktok_live_view_window';
+
+                        return isLivePath && isLiveTarget;
+                    });
+                }"""
+            ))
+        except Exception:
+            return False
     def _get_author_href(self, page) -> str:
         try:
             href = page.evaluate(
@@ -445,9 +510,19 @@ class TikTokScraper:
 
     def _get_hashtags(self, page) -> list:
         try:
-            tags = page.locator("a[href*='/tag/']").all_inner_texts()
-            return [t.strip() for t in tags if t.strip()]
-        except:
+            tags = page.evaluate(
+                """() => {
+                    const els = [...document.querySelectorAll("a[href*='/tag/']")];
+                    return els.filter(el => {
+                        const r = el.getBoundingClientRect();
+                        return r.width > 0 && r.height > 0 &&
+                            r.top < window.innerHeight && r.bottom > 0 &&
+                            r.left < window.innerWidth && r.right > 0;
+                    }).map(el => (el.innerText || "").trim()).filter(Boolean);
+                }"""
+            )
+            return tags or []
+        except Exception:
             return []
         
     def _get_bio_link(self, page) -> str:

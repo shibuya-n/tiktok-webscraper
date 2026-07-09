@@ -1,9 +1,8 @@
 from config import SCAM_SCORE_THRESHOLD
 import re 
 
-PHONE_REGEX = re.compile(
-    r'(\+?\d[\d\s\-().]{7,}\d)'
-)
+PHONE_REGEX = re.compile(r'(\+?\d[\d\s\-().]{7,15}\d)')
+
 
 SCAM_KEYWORDS = [
     "free money", "giveaway", "click the link", "dm me",
@@ -17,6 +16,12 @@ SCAM_KEYWORDS = [
     "i made $", "you can too", "easy money", "instant profit",
     "follow for more tips", "link in bio", "message me",
     "sign up now", "limited spots", "only a few left",
+    
+    ## keywords found after manual scraping 
+    
+    "bag", "fashion", "contact", "whatsapp", "luxury", "rolex", "watch",
+    "quality", "buy", "shoes", "quality", "dm", "click", "link", "shop",
+    "1:1", "wx", "ws"
     
     
     
@@ -32,13 +37,14 @@ SCAM_HASHTAGS = [
     "#earnmoneyonline",
     
     ## hashtags found after manual scraping 
-    "#watch", "#watches", "#luxury", "#fashion", "",
+    "#watch", "#watches", "#luxury", "#fashion", "#unboxing", "#perfumes", 
+    "#jewlery", 
 ]
 
 SUSPICIOUS_LINK_KEYWORDS = [
     "whatsapp", "t.me", "telegram", "wa.me", "wechat",
     "discord", "linktr.ee", "beacons.ai", "urlgeni",
-    "bit.ly", "tinyurl", "shorturl",
+    "bit.ly", "tinyurl", "shorturl", ".com"
 ]
 
 def parse_count(value: str) -> int: 
@@ -64,7 +70,8 @@ def score_video(video_data: dict) -> int:
         video_data.get("author", "")
     ).lower()
     keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
-    hashtag_text = " ".join(video_data.get("hashtags", [])).lower()
+    hashtags = [ht for ht in video_data.get("hashtags", []) if ht.strip()]
+    hashtag_text = " ".join(hashtags).lower()
     hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in hashtag_text)
 
     likes = parse_count(video_data.get("likes", ""))
@@ -72,7 +79,7 @@ def score_video(video_data: dict) -> int:
     shares = parse_count(video_data.get("shares", ""))
     
     if has_phone_number(video_data.get("description", "")):
-        sum_score += 3
+        sum_score += 2
 
     if likes < 1000 : 
         sum_score += 1
@@ -83,8 +90,8 @@ def score_video(video_data: dict) -> int:
 
     return sum_score + keyword_score + hashtag_score
 
-def score_account(score: int, video_data: dict) -> int: 
-    sum_score = score
+def score_account(video_data: dict) -> int: 
+    sum_score = 0
     text = (video_data.get("bio", "")).lower()
     keyword_score = sum(2 for kw in SCAM_KEYWORDS if kw.lower() in text)
     hashtag_score = sum(1 for ht in SCAM_HASHTAGS if ht.lower() in text)
@@ -93,16 +100,16 @@ def score_account(score: int, video_data: dict) -> int:
     link = (video_data.get("bio_link", "")).lower()
     
     if has_phone_number(video_data.get("bio", "")):
-        sum_score += 3
+        sum_score += 2
     
     if link: 
-        link_score = sum(2 for kw in SUSPICIOUS_LINK_KEYWORDS if kw in link_lower)
+        link_score = sum(2 for kw in SUSPICIOUS_LINK_KEYWORDS if kw in link)
         sum_score += link_score 
-
+    return sum_score
 
 
 def is_scam(video_data: dict) -> bool:
-    return score_video(video_data) >= SCAM_SCORE_THRESHOLD
+    return (score_video(video_data) + score_account(video_data)) >= SCAM_SCORE_THRESHOLD
 
 def get_scam_reasons(video_data: dict) -> list:
     text = (
@@ -113,8 +120,10 @@ def get_scam_reasons(video_data: dict) -> list:
     for kw in SCAM_KEYWORDS:
         if kw.lower() in text:
             reasons.append(f"Keyword: '{kw}'")
+    hashtags = [ht for ht in video_data.get("hashtags", []) if ht.strip()]
+    hashtag_text = " ".join(hashtags).lower()
     for ht in SCAM_HASHTAGS:
-        if ht.lower() in text:
+        if ht.lower() in hashtag_text:
             reasons.append(f"Hashtag: '{ht}'")
     if has_phone_number(video_data.get("description", "")):
         reasons.append("Phone number in description")
