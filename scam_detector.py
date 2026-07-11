@@ -105,12 +105,17 @@ def score_account(video_data: dict) -> int:
     if link: 
         link_score = sum(2 for kw in SUSPICIOUS_LINK_KEYWORDS if kw in link)
         sum_score += link_score 
+        
+    total_likes = parse_count(video_data.get("total_likes", ""))
+    total_followers = parse_count(video_data.get("total_followers", ""))
+    
+    
+    
     return sum_score
 
 
-def is_scam(video_data: dict) -> bool:
-    return (score_video(video_data) + score_account(video_data)) >= SCAM_SCORE_THRESHOLD
-
+def is_scam(video_data: dict) -> int:
+    return (score_video(video_data) + score_account(video_data))
 def get_scam_reasons(video_data: dict) -> list:
     text = (
         video_data.get("description", "") + " " +

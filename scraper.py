@@ -6,7 +6,9 @@
 
 import json
 import os
+import re 
 import time
+import hashlib
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
@@ -154,17 +156,20 @@ class TikTokScraper:
                 print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
                 print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
 
-                
-              
-                
-
-            if is_scam(video_data) >= SCAM_SCORE_THRESHOLD:
-                reasons = get_scam_reasons(video_data)
+            # update score w/ new account data  
+            score = is_scam(video_data)
+            reasons = get_scam_reasons(video_data)
+            frame_paths = self._capture_frames(page, video_data["author"], score, label, reasons)
+            log_to_sheet(video_data, score, label, reasons, frame_paths)
+            
+            
+            if score > SCAM_SCORE_THRESHOLD:
+               
                 print(f"  ⚠️  FLAGGED — Reasons: {', '.join(reasons)}")
                 #self._like_video(page)
-                #log_to_sheet(video_data, score, label, reasons)
+                
             else:
-                print(f"  ✅ Clean — no action taken.")
+                print(f"  ✅ Clean")
 
             page.wait_for_timeout(DELAY_BETWEEN_VIDEOS_MS)
 
@@ -536,3 +541,75 @@ class TikTokScraper:
             return link or ""
         except Exception:
             return ""
+
+    def _make_video_id(self, url: str) -> str:
+        """Extracts TikTok's numeric video ID from the URL if present,
+        otherwise falls back to a short hash of the URL."""
+        match = re.search(r"/video/(\d+)", url or "")
+        if match:
+            return match.group(1)[:12]
+        return hashlib.sha1((url or "").encode()).hexdigest()[:8]
+
+    def _capture_frames(self, page, video_data: dict, score: int, label: str,
+                        reasons: list, num_frames: int = 3, interval_ms: int = 1500) -> list:
+        """Capture N screenshots of the current video element at intervals,
+        named for dataset use, plus a JSON metadata sidecar. Returns list of
+        saved frame file paths."""
+        frame_paths = []
+        try:
+            os.makedirs("./frames", exist_ok=True)
+
+            author    = video_data.get("author") or "unknown"
+            url       = video_data.get("url", "")
+            video_id  = self._make_video_id(url)
+            ts        = video_data.get("timestamp", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            ts_slug   = ts.replace("-", "").replace(":", "").replace(" ", "_")
+
+            # coarse label for the filename only — full score/label/reasons
+            # live in the JSON sidecar, not encoded in the filename itself
+            class_slug = "scam" if score >= SCAM_SCORE_THRESHOLD else "clean"
+
+            video_locator = page.locator("video").first
+
+            for i in range(num_frames):
+                filename = f"{class_slug}_{author}_{video_id}_{ts_slug}_f{i}.png"
+                path = f"./frames/{filename}"
+                try:
+                    video_locator.screenshot(path=path, timeout=3000)
+                    frame_paths.append(path)
+                except Exception as e:
+                    print(f"    [WARN] Frame {i} capture failed: {e}")
+
+                if i < num_frames - 1:
+                    page.wait_for_timeout(interval_ms)
+
+            if frame_paths:
+                metadata = {
+                    "video_id": video_id,
+                    "author": author,
+                    "url": url,
+                    "timestamp": ts,
+                    "score": score,
+                    "label": label,
+                    "reasons": reasons,
+                    "frames": [os.path.basename(p) for p in frame_paths],
+                }
+                meta_path = f"./frames/{class_slug}_{author}_{video_id}_{ts_slug}.json"
+                with open(meta_path, "w", encoding="utf-8") as f:
+                    json.dump(metadata, f, indent=2, ensure_ascii=False)
+                    if frame_paths:
+                        metadata = { ... }  # unchanged
+                        meta_path = f"./frames/{class_slug}_{author}_{video_id}_{ts_slug}.json"
+                        with open(meta_path, "w", encoding="utf-8") as f:
+                            json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+                        json_url = upload_json(meta_path)
+                        if json_url:
+                            print(f"  [DRIVE] Metadata uploaded: {json_url}")
+
+        except Exception as e:
+            print(f"  [ERROR] Frame capture failed: {e}")
+
+        return frame_paths        
+        
+        

@@ -1,3 +1,9 @@
-2026/07/09-16:23:07.858 3284 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/09-16:23:07.859 3284 Recovering log #83
-2026/07/09-16:23:07.860 3284 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000083.log 
+2026/07/10-13:40:44.309 6938 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/10-13:40:44.309 6938 Recovering log #92
+2026/07/10-13:40:44.310 6938 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000092.log 
+2026/07/10-13:40:46.181 6938 Compacting 1@1 + 1@2 files
+2026/07/10-13:40:46.190 6938 Generated table #95@1: 715 keys, 22906 bytes
+2026/07/10-13:40:46.190 6938 Compacted 1@1 + 1@2 files => 22906 bytes
+2026/07/10-13:40:46.192 6938 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/10-13:40:46.192 6938 Delete type=2 #90
+2026/07/10-13:40:46.192 6938 Delete type=2 #93

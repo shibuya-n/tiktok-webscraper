@@ -1,8 +1,7 @@
-2026/07/09-16:23:07.702 58d4 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/09-16:23:07.706 58d4 Recovering log #373
-2026/07/09-16:23:07.708 58d4 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000373.log 
-2026/07/09-16:24:07.714 89e0 Level-0 table #378: started
-2026/07/09-16:24:07.734 89e0 Level-0 table #378: 52561 bytes OK
-2026/07/09-16:24:07.743 89e0 Delete type=0 #373
-2026/07/09-16:24:12.243 89e0 Level-0 table #380: started
-2026/07/09-16:24:12.276 89e0 Level-0 table #380: 42168 bytes OK
+2026/07/10-13:40:44.153 671c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/10-13:40:44.158 671c Recovering log #398
+2026/07/10-13:40:44.158 671c Level-0 table #401: started
+2026/07/10-13:40:44.185 671c Level-0 table #401: 41256 bytes OK
+2026/07/10-13:40:44.194 671c Delete type=0 #398
+2026/07/10-13:41:50.092 611c Level-0 table #404: started
+2026/07/10-13:41:50.148 611c Level-0 table #404: 59635 bytes OK

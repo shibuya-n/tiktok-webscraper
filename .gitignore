@@ -1,0 +1,41 @@
+# ─── Credentials & secrets ───
+credentials.json
+tiktok_cookies.json
+*.env
+.env
+
+# ─── Browser profile (session data, DPAPI-encrypted on Windows) ───
+browser_profile/
+
+# ─── Debug output (screenshots may contain scraped account data) ───
+debug/
+
+# ─── Frame captures for classifier (potentially large + contains scraped content) ───
+frames/
+
+# ─── Python ───
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ─── Virtual environments ───
+venv/
+env/
+.venv/
+
+# ─── Playwright ───
+node_modules/
+playwright-report/
+test-results/
+
+# ─── OS / editor cruft ───
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
