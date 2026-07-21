@@ -1,7 +1,24 @@
-2026/07/10-13:40:44.153 671c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/10-13:40:44.158 671c Recovering log #398
-2026/07/10-13:40:44.158 671c Level-0 table #401: started
-2026/07/10-13:40:44.185 671c Level-0 table #401: 41256 bytes OK
-2026/07/10-13:40:44.194 671c Delete type=0 #398
-2026/07/10-13:41:50.092 611c Level-0 table #404: started
-2026/07/10-13:41:50.148 611c Level-0 table #404: 59635 bytes OK
+2026/07/15-08:49:45.581 8f2c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/15-08:49:45.594 8f2c Recovering log #488
+2026/07/15-08:49:45.596 8f2c Level-0 table #491: started
+2026/07/15-08:49:45.612 8f2c Level-0 table #491: 25406 bytes OK
+2026/07/15-08:49:45.613 8f2c Recovering log #491
+2026/07/15-08:49:45.615 8f2c Level-0 table #492: started
+2026/07/15-08:49:45.625 8f2c Level-0 table #492: 46503 bytes OK
+2026/07/15-08:49:45.633 8f2c Delete type=0 #488
+2026/07/15-08:49:45.633 8f2c Delete type=0 #491
+2026/07/15-08:52:56.892 96c8 Level-0 table #495: started
+2026/07/15-08:52:56.900 96c8 Level-0 table #495: 58668 bytes OK
+2026/07/15-08:52:56.903 96c8 Delete type=0 #493
+2026/07/15-08:52:56.904 8f2c Compacting 4@0 + 1@1 files
+2026/07/15-08:52:56.913 8f2c Generated table #496@0: 80 keys, 59131 bytes
+2026/07/15-08:52:56.913 8f2c Compacted 4@0 + 1@1 files => 59131 bytes
+2026/07/15-08:52:56.915 8f2c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/15-08:52:56.916 8f2c Delete type=2 #486
+2026/07/15-08:52:56.916 8f2c Delete type=2 #489
+2026/07/15-08:52:56.916 8f2c Delete type=2 #491
+2026/07/15-08:52:56.916 8f2c Delete type=2 #492
+2026/07/15-08:52:56.916 8f2c Delete type=2 #495
+2026/07/15-08:55:47.445 96c8 Level-0 table #498: started
+2026/07/15-08:55:47.453 96c8 Level-0 table #498: 21920 bytes OK
+2026/07/15-08:55:47.456 96c8 Delete type=0 #494

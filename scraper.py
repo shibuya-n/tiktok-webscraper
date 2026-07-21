@@ -9,6 +9,7 @@ import os
 import re 
 import time
 import hashlib
+from drive_uploader import upload_json
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
@@ -23,7 +24,8 @@ from config import (
     PAGE_LOAD_WAIT_MS,
     SCROLL_WAIT_MS,
     USER_DATA_DIR,
-    SCAM_SCORE_THRESHOLD
+    SCAM_SCORE_THRESHOLD,
+    ENABLE_DRIVE_UPLOAD
 )
 
 
@@ -155,17 +157,21 @@ class TikTokScraper:
                 print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
                 print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
                 print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
+            
+            if video_data['isAd']: 
+                video_data['bio_link'] = self._get_ad_link(page) 
 
             # update score w/ new account data  
             score = is_scam(video_data)
             reasons = get_scam_reasons(video_data)
-            frame_paths = self._capture_frames(page, video_data["author"], score, label, reasons)
+            frame_paths = self._capture_frames(page, video_data, score, label, reasons)
             log_to_sheet(video_data, score, label, reasons, frame_paths)
             
             
             if score > SCAM_SCORE_THRESHOLD:
-               
+                
                 print(f"  ⚠️  FLAGGED — Reasons: {', '.join(reasons)}")
+                page.wait_for_timeout(150000)
                 #self._like_video(page)
                 
             else:
@@ -212,54 +218,56 @@ class TikTokScraper:
 
     def _like_video(self, page):
         try:
-            index = page.evaluate(
-                """(sel) => {
-                    const els = [...document.querySelectorAll(sel)];
-                    return els.findIndex(el => {
-                        const r = el.getBoundingClientRect();
-                        return r.width > 0 && r.height > 0 &&
-                            r.top < window.innerHeight && r.bottom > 0 &&
-                            r.left < window.innerWidth && r.right > 0;
-                    });
-                }""",
-                "[data-e2e='like-icon']"
-            )
+            def is_liked() -> bool:
+                return page.evaluate(
+                    """(sel) => {
+                        const el = document.querySelector(sel);
+                        return el ? el.getAttribute('aria-pressed') === 'true' : false;
+                    }""",
+                    "[data-e2e='like-icon']"
+                )
 
-            if index == -1:
+            def click_in_viewport() -> bool:
+                return bool(page.evaluate(
+                    """(sel) => {
+                        const els = [...document.querySelectorAll(sel)];
+                        const target = els.find(el => {
+                            const r = el.getBoundingClientRect();
+                            return r.width > 0 && r.height > 0 &&
+                                r.top < window.innerHeight && r.bottom > 0 &&
+                                r.left < window.innerWidth && r.right > 0;
+                        });
+                        if (!target) return false;
+                        target.click();   // synthetic click — no real mouse coords,
+                                        // can't bleed through to the video layer
+                        return true;
+                    }""",
+                    "[data-e2e='like-icon']"
+                ))
+
+            if not click_in_viewport():
                 print("  [WARN] Could not find like icon in viewport.")
                 return
 
-            like_btn = page.locator("[data-e2e='like-icon']").nth(index)
-            box = like_btn.bounding_box()
-            if not box:
-                print("  [WARN] Could not get bounding box for like icon.")
+            page.wait_for_timeout(700)
+
+            if is_liked():
+                print("  [LIKED] Like confirmed ✓")
                 return
 
-            x = box["x"] + box["width"] / 2
-            y = box["y"] + box["height"] / 2
+            print("  [WARN] Not liked after first click — retrying once.")
+            if not click_in_viewport():
+                print("  [WARN] Could not find like icon on retry.")
+                return
 
-            page.mouse.move(x, y)
-            page.mouse.down()
-            page.wait_for_timeout(500)   # let TikTok's re-render settle before mouseup
-            page.mouse.up()
-            
-            liked = page.evaluate(
-                """(sel) => {
-                    const el = document.querySelector(sel);
-                    return el ? el.getAttribute('aria-pressed') === 'true' : false;
-                }""",
-                "[data-e2e='like-icon']"
-            )
-            if liked:
-                print("  [LIKED] Like confirmed ✓")
+            page.wait_for_timeout(700)
+            if is_liked():
+                print("  [LIKED] Like confirmed on retry ✓")
             else:
-                print("  [WARN] Like click sent but state doesn't show as liked.")
+                print("  [WARN] Still not liked after retry.")
 
-            page.wait_for_timeout(1000)
-            print("  [LIKED] Like sent ✓")
         except Exception as e:
             print(f"  [ERROR] Could not like video: {e}")
-
     def _scroll_to_next(self, page, max_attempts: int = 3):
         # Poll using the EXACT same selectors _extract_video_data relies on,
         # instead of inspecting <video> tags directly via JS. TikTok keeps
@@ -541,6 +549,17 @@ class TikTokScraper:
             return link or ""
         except Exception:
             return ""
+    def _get_ad_link(self, page) -> str:
+        try:
+            link = page.evaluate(
+                """() => {
+                    const el = document.querySelector("[data-e2e='ttam-ads-cta']");
+                    return el ? el.getAttribute('href') : "";
+                }"""
+            )
+            return link or ""
+        except Exception:
+            return ""
 
     def _make_video_id(self, url: str) -> str:
         """Extracts TikTok's numeric video ID from the URL if present,
@@ -597,15 +616,10 @@ class TikTokScraper:
                 meta_path = f"./frames/{class_slug}_{author}_{video_id}_{ts_slug}.json"
                 with open(meta_path, "w", encoding="utf-8") as f:
                     json.dump(metadata, f, indent=2, ensure_ascii=False)
-                    if frame_paths:
-                        metadata = { ... }  # unchanged
-                        meta_path = f"./frames/{class_slug}_{author}_{video_id}_{ts_slug}.json"
-                        with open(meta_path, "w", encoding="utf-8") as f:
-                            json.dump(metadata, f, indent=2, ensure_ascii=False)
-
-                        json_url = upload_json(meta_path)
-                        if json_url:
-                            print(f"  [DRIVE] Metadata uploaded: {json_url}")
+                if ENABLE_DRIVE_UPLOAD:
+                    json_url = upload_json(meta_path)
+                    if json_url:
+                        print(f"  [DRIVE] Metadata uploaded: {json_url}")
 
         except Exception as e:
             print(f"  [ERROR] Frame capture failed: {e}")

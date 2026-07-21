@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from config import GOOGLE_SHEET_NAME, CREDENTIALS_FILE
+from config import GOOGLE_SHEET_NAME, CREDENTIALS_FILE, ENABLE_DRIVE_UPLOAD
 from drive_uploader import upload_frame
 
 SCOPES = [
@@ -42,10 +42,11 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
         hashtags_str = ", ".join(hashtags) if hashtags else "N/A"
 
         frame_urls = []
-        for path in (frame_paths or []):
-            url = upload_frame(path)
-            if url:
-                frame_urls.append(url)
+        if ENABLE_DRIVE_UPLOAD:
+            for path in (frame_paths or []):
+                url = upload_frame(path)
+                if url:
+                    frame_urls.append(url)
 
         frame_urls_str = ", ".join(frame_urls) if frame_urls else "N/A"
         thumbnail_formula = f'=IMAGE("{frame_urls[0]}")' if frame_urls else ""

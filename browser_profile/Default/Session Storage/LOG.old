@@ -1,5 +1,6 @@
-2026/07/10-13:40:44.226 671c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
-2026/07/10-13:40:44.233 671c Recovering log #68
-2026/07/10-13:40:44.237 671c Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/000068.log 
-2026/07/10-13:41:50.091 1588 Level-0 table #72: started
-2026/07/10-13:41:50.136 1588 Level-0 table #72: 23131 bytes OK
+2026/07/15-08:49:45.685 8f2c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
+2026/07/15-08:49:45.688 8f2c Recovering log #88
+2026/07/15-08:49:45.695 8f2c Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/000088.log 
+2026/07/15-08:53:47.447 8f2c Level-0 table #91: started
+2026/07/15-08:53:47.453 8f2c Level-0 table #91: 22142 bytes OK
+2026/07/15-08:53:47.455 8f2c Delete type=0 #88
