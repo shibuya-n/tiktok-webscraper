@@ -1,12 +1,6 @@
-2026/07/15-08:49:45.818 7f70 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/15-08:49:45.819 7f70 Recovering log #132
-2026/07/15-08:49:45.851 7f70 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000132.log 
-2026/07/15-08:50:26.814 7f70 Level-0 table #137: started
-2026/07/15-08:50:26.836 7f70 Level-0 table #137: 1003106 bytes OK
-2026/07/15-08:50:26.840 7f70 Delete type=0 #132
-2026/07/15-08:53:34.336 cdc Compacting 1@1 + 1@2 files
-2026/07/15-08:53:34.348 cdc Generated table #138@1: 729 keys, 25636 bytes
-2026/07/15-08:53:34.348 cdc Compacted 1@1 + 1@2 files => 25636 bytes
-2026/07/15-08:53:34.350 cdc compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/15-08:53:34.350 cdc Delete type=2 #134
-2026/07/15-08:53:34.350 cdc Delete type=2 #137
+2026/07/22-00:38:35.450 66c4 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/22-00:38:35.450 66c4 Recovering log #301
+2026/07/22-00:38:35.456 66c4 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000301.log 
+2026/07/22-00:43:49.005 7338 Level-0 table #306: started
+2026/07/22-00:43:49.038 7338 Level-0 table #306: 1045153 bytes OK
+2026/07/22-00:43:49.048 7338 Delete type=0 #301

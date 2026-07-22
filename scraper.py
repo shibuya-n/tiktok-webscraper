@@ -55,10 +55,12 @@ class TikTokScraper:
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
                 "Chrome/124.0.0.0 Safari/537.36"
+            
             ),
-            viewport={"width": 1280, "height": 800}
+            viewport={"width": 1280, "height": 800},
+            
         )
-
+        context.grant_permissions(["clipboard-read", "clipboard-write"])
         self._load_cookies(context)
 
         page = context.new_page()
@@ -171,7 +173,7 @@ class TikTokScraper:
             if score > SCAM_SCORE_THRESHOLD:
                 
                 print(f"  ⚠️  FLAGGED — Reasons: {', '.join(reasons)}")
-                page.wait_for_timeout(150000)
+                page.wait_for_timeout(100000)
                 #self._like_video(page)
                 
             else:
@@ -195,7 +197,7 @@ class TikTokScraper:
             
 
             return {
-                "url":         page.url,
+                "url":         self._get_video_link(page),
                 "author":      author,
                 "description": description,
                 "hashtags":    hashtags,
@@ -548,6 +550,38 @@ class TikTokScraper:
             )
             return link or ""
         except Exception:
+            return ""
+    def _get_video_link(self, page) -> str:
+        try:
+            index = page.evaluate(
+                """(sel) => {
+                    const els = [...document.querySelectorAll(sel)];
+                    return els.findIndex(el => {
+                        const r = el.getBoundingClientRect();
+                        return r.width > 0 && r.height > 0 &&
+                            r.top < window.innerHeight && r.bottom > 0 &&
+                            r.left < window.innerWidth && r.right > 0;
+                    });
+                }""",
+                "[data-e2e='share-icon']"
+            )
+            if index == -1:
+                return ""
+            
+            sharebtn = page.locator("[data-e2e='share-icon']")
+            sharebtn = page.locator("[data-e2e='share-icon']").nth(index)
+            sharebtn.click(timeout=5000)
+
+            copybtn = page.locator("[data-e2e='share-copy']").first
+            copybtn.click(timeout=1000)
+            page.wait_for_timeout(300)  # let the clipboard write land
+
+            link = page.evaluate("() => navigator.clipboard.readText()")
+
+            page.mouse.click(1100, 400)  # close the share modal
+            return link or ""
+        except Exception:
+            print(f"  [WARN] Could not get share link: {e}")
             return ""
     def _get_ad_link(self, page) -> str:
         try:
