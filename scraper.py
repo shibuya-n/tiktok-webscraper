@@ -148,17 +148,15 @@ class TikTokScraper:
             label  = get_score_label(score)
             print(f"  Score  : {score} ({label})")
             
-            #check if worth checking account bio 
-            if is_scam(video_data) > 0: 
-                account = self._extract_account_page(page, video_data["author"])
-                
-                # add to video data dict
-                video_data.update(account) 
-                
-                print(f"  Bio: {video_data.get('bio', '')[:100] or 'None'}")
-                print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
-                print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
-                print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
+            account = self._extract_account_page(page, video_data["author"])
+            
+            # add to video data dict
+            video_data.update(account) 
+            
+            print(f"  Bio: {video_data.get('bio', '')[:100] or 'None'}")
+            print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
+            print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
+            print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
             
             if video_data['isAd']: 
                 video_data['bio_link'] = self._get_ad_link(page) 

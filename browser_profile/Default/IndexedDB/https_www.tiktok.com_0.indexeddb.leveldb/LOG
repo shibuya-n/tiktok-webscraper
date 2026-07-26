@@ -1,18 +1,30 @@
-2026/07/22-00:46:16.553 7d0c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/22-00:46:16.554 7d0c Recovering log #305
-2026/07/22-00:46:16.555 7d0c Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000305.log 
-2026/07/22-00:46:20.642 7d0c Compacting 1@1 + 1@2 files
-2026/07/22-00:46:20.652 7d0c Generated table #308@1: 725 keys, 22742 bytes
-2026/07/22-00:46:20.652 7d0c Compacted 1@1 + 1@2 files => 22742 bytes
-2026/07/22-00:46:20.654 7d0c compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/22-00:50:39.604 7d0c Level-0 table #310: started
-2026/07/22-00:50:39.625 7d0c Level-0 table #310: 1081054 bytes OK
-2026/07/22-00:50:39.635 7d0c Delete type=2 #303
-2026/07/22-00:50:39.635 7d0c Delete type=0 #305
-2026/07/22-00:50:39.635 7d0c Delete type=2 #306
-2026/07/22-00:50:46.411 7d0c Compacting 1@1 + 1@2 files
-2026/07/22-00:50:46.435 7d0c Generated table #311@1: 725 keys, 22678 bytes
-2026/07/22-00:50:46.435 7d0c Compacted 1@1 + 1@2 files => 22678 bytes
-2026/07/22-00:50:46.446 7d0c compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/22-00:50:46.447 7d0c Delete type=2 #308
-2026/07/22-00:50:46.447 7d0c Delete type=2 #310
+2026/07/24-21:53:14.961 8f24 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/24-21:53:14.967 8f24 Recovering log #390
+2026/07/24-21:53:14.969 8f24 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000390.log 
+2026/07/24-21:59:41.778 8f24 Level-0 table #395: started
+2026/07/24-21:59:41.793 8f24 Level-0 table #395: 1099096 bytes OK
+2026/07/24-21:59:41.795 8f24 Delete type=0 #390
+2026/07/24-21:59:47.597 8f24 Compacting 1@1 + 1@2 files
+2026/07/24-21:59:47.607 8f24 Generated table #396@1: 725 keys, 22945 bytes
+2026/07/24-21:59:47.608 8f24 Compacted 1@1 + 1@2 files => 22945 bytes
+2026/07/24-21:59:47.610 8f24 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/24-21:59:47.610 8f24 Delete type=2 #392
+2026/07/24-21:59:47.610 8f24 Delete type=2 #395
+2026/07/24-22:11:15.677 8f24 Level-0 table #398: started
+2026/07/24-22:11:15.702 8f24 Level-0 table #398: 1034503 bytes OK
+2026/07/24-22:11:15.705 8f24 Delete type=0 #394
+2026/07/24-22:12:19.888 8f24 Compacting 1@1 + 1@2 files
+2026/07/24-22:12:19.914 8f24 Generated table #399@1: 725 keys, 22839 bytes
+2026/07/24-22:12:19.914 8f24 Compacted 1@1 + 1@2 files => 22839 bytes
+2026/07/24-22:12:19.924 8f24 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/24-22:12:19.924 8f24 Delete type=2 #396
+2026/07/24-22:12:19.925 8f24 Delete type=2 #398
+2026/07/24-22:21:34.544 a90 Level-0 table #401: started
+2026/07/24-22:21:34.561 a90 Level-0 table #401: 1036278 bytes OK
+2026/07/24-22:21:34.564 a90 Delete type=0 #397
+2026/07/24-22:23:06.722 8f24 Compacting 1@1 + 1@2 files
+2026/07/24-22:23:06.736 8f24 Generated table #402@1: 733 keys, 28811 bytes
+2026/07/24-22:23:06.736 8f24 Compacted 1@1 + 1@2 files => 28811 bytes
+2026/07/24-22:23:06.738 8f24 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/24-22:23:06.739 8f24 Delete type=2 #399
+2026/07/24-22:23:06.739 8f24 Delete type=2 #401

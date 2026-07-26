@@ -1,9 +1,44 @@
-2026/07/22-00:46:16.420 6288 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/22-00:46:16.424 6288 Recovering log #758
-2026/07/22-00:46:16.427 6288 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000758.log 
-2026/07/22-00:48:17.131 64a8 Level-0 table #762: started
-2026/07/22-00:48:17.151 64a8 Level-0 table #762: 63136 bytes OK
-2026/07/22-00:48:17.154 64a8 Delete type=0 #758
-2026/07/22-00:52:17.138 64a8 Level-0 table #764: started
-2026/07/22-00:52:17.158 64a8 Level-0 table #764: 26469 bytes OK
-2026/07/22-00:52:17.173 64a8 Delete type=0 #761
+2026/07/24-21:53:14.628 78c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/24-21:53:14.640 78c Recovering log #889
+2026/07/24-21:53:14.640 78c Level-0 table #892: started
+2026/07/24-21:53:14.646 78c Level-0 table #892: 23172 bytes OK
+2026/07/24-21:53:14.652 78c Delete type=0 #889
+2026/07/24-21:53:14.652 9864 Compacting 4@0 + 1@1 files
+2026/07/24-21:53:14.685 9864 Generated table #894@0: 130 keys, 202440 bytes
+2026/07/24-21:53:14.685 9864 Compacted 4@0 + 1@1 files => 202440 bytes
+2026/07/24-21:53:14.689 9864 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/24-21:53:14.691 9864 Delete type=2 #884
+2026/07/24-21:53:14.692 9864 Delete type=2 #886
+2026/07/24-21:53:14.692 9864 Delete type=2 #888
+2026/07/24-21:53:14.693 9864 Delete type=2 #890
+2026/07/24-21:53:14.693 9864 Delete type=2 #892
+2026/07/24-21:54:14.680 9864 Level-0 table #896: started
+2026/07/24-21:54:14.700 9864 Level-0 table #896: 52016 bytes OK
+2026/07/24-21:54:14.713 9864 Delete type=0 #893
+2026/07/24-21:59:15.394 9864 Level-0 table #898: started
+2026/07/24-21:59:15.413 9864 Level-0 table #898: 25535 bytes OK
+2026/07/24-21:59:15.417 9864 Delete type=0 #895
+2026/07/24-22:03:15.382 9864 Level-0 table #900: started
+2026/07/24-22:03:15.396 9864 Level-0 table #900: 21466 bytes OK
+2026/07/24-22:03:15.403 9864 Delete type=0 #897
+2026/07/24-22:08:15.390 9864 Level-0 table #902: started
+2026/07/24-22:08:15.408 9864 Level-0 table #902: 24327 bytes OK
+2026/07/24-22:08:15.410 9864 Delete type=0 #899
+2026/07/24-22:08:15.411 9864 Compacting 4@0 + 1@1 files
+2026/07/24-22:08:15.418 9864 Generated table #903@0: 130 keys, 203554 bytes
+2026/07/24-22:08:15.418 9864 Compacted 4@0 + 1@1 files => 203554 bytes
+2026/07/24-22:08:15.420 9864 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/24-22:08:15.421 9864 Delete type=2 #894
+2026/07/24-22:08:15.421 9864 Delete type=2 #896
+2026/07/24-22:08:15.421 9864 Delete type=2 #898
+2026/07/24-22:08:15.421 9864 Delete type=2 #900
+2026/07/24-22:08:15.421 9864 Delete type=2 #902
+2026/07/24-22:12:15.394 9864 Level-0 table #905: started
+2026/07/24-22:12:15.402 9864 Level-0 table #905: 24045 bytes OK
+2026/07/24-22:12:15.405 9864 Delete type=0 #901
+2026/07/24-22:17:15.393 9864 Level-0 table #907: started
+2026/07/24-22:17:15.404 9864 Level-0 table #907: 27541 bytes OK
+2026/07/24-22:17:15.407 9864 Delete type=0 #904
+2026/07/24-22:20:15.385 9864 Level-0 table #909: started
+2026/07/24-22:20:15.392 9864 Level-0 table #909: 21126 bytes OK
+2026/07/24-22:20:15.395 9864 Delete type=0 #906
