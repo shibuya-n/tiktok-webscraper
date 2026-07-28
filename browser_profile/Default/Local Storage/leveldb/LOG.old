@@ -1,45 +1,7 @@
-2026/07/24-16:04:28.526 2eb4 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/24-16:04:28.531 2eb4 Recovering log #870
-2026/07/24-16:04:28.534 2eb4 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000870.log 
-2026/07/24-16:05:28.544 3754 Level-0 table #874: started
-2026/07/24-16:05:28.550 3754 Level-0 table #874: 24439 bytes OK
-2026/07/24-16:05:28.552 3754 Delete type=0 #870
-2026/07/24-16:05:28.553 2eb4 Compacting 4@0 + 1@1 files
-2026/07/24-16:05:28.560 2eb4 Generated table #875@0: 130 keys, 160638 bytes
-2026/07/24-16:05:28.560 2eb4 Compacted 4@0 + 1@1 files => 160638 bytes
-2026/07/24-16:05:28.562 2eb4 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/07/24-16:05:28.563 2eb4 Delete type=2 #864
-2026/07/24-16:05:28.563 2eb4 Delete type=2 #866
-2026/07/24-16:05:28.563 2eb4 Delete type=2 #868
-2026/07/24-16:05:28.563 2eb4 Delete type=2 #871
-2026/07/24-16:05:28.563 2eb4 Delete type=2 #874
-2026/07/24-16:06:29.222 3754 Level-0 table #877: started
-2026/07/24-16:06:29.242 3754 Level-0 table #877: 50893 bytes OK
-2026/07/24-16:06:29.258 3754 Delete type=0 #873
-2026/07/24-16:10:29.222 3754 Level-0 table #879: started
-2026/07/24-16:10:29.241 3754 Level-0 table #879: 21284 bytes OK
-2026/07/24-16:10:29.247 3754 Delete type=0 #876
-2026/07/24-16:15:29.222 3754 Level-0 table #881: started
-2026/07/24-16:15:29.240 3754 Level-0 table #881: 25363 bytes OK
-2026/07/24-16:15:29.246 3754 Delete type=0 #878
-2026/07/24-16:20:29.223 3754 Level-0 table #883: started
-2026/07/24-16:20:29.229 3754 Level-0 table #883: 28857 bytes OK
-2026/07/24-16:20:29.231 3754 Delete type=0 #880
-2026/07/24-16:20:29.232 3754 Compacting 4@0 + 1@1 files
-2026/07/24-16:20:29.239 3754 Generated table #884@0: 130 keys, 202392 bytes
-2026/07/24-16:20:29.240 3754 Compacted 4@0 + 1@1 files => 202392 bytes
-2026/07/24-16:20:29.242 3754 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/07/24-16:20:29.242 3754 Delete type=2 #875
-2026/07/24-16:20:29.242 3754 Delete type=2 #877
-2026/07/24-16:20:29.242 3754 Delete type=2 #879
-2026/07/24-16:20:29.242 3754 Delete type=2 #881
-2026/07/24-16:20:29.242 3754 Delete type=2 #883
-2026/07/24-16:24:29.214 3754 Level-0 table #886: started
-2026/07/24-16:24:29.232 3754 Level-0 table #886: 20598 bytes OK
-2026/07/24-16:24:29.235 3754 Delete type=0 #882
-2026/07/24-21:25:39.246 3754 Level-0 table #888: started
-2026/07/24-21:25:39.262 3754 Level-0 table #888: 24485 bytes OK
-2026/07/24-21:25:39.278 3754 Delete type=0 #885
-2026/07/24-21:29:31.007 3754 Level-0 table #890: started
-2026/07/24-21:29:31.044 3754 Level-0 table #890: 23880 bytes OK
-2026/07/24-21:29:31.045 3754 Delete type=0 #887
+2026/07/25-23:56:52.854 5e2c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/25-23:56:52.863 5e2c Recovering log #1030
+2026/07/25-23:56:52.863 5e2c Level-0 table #1033: started
+2026/07/25-23:56:52.888 5e2c Level-0 table #1033: 50455 bytes OK
+2026/07/25-23:56:52.889 5e2c Recovering log #1032
+2026/07/25-23:56:52.892 5e2c Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/001032.log 
+2026/07/25-23:56:52.918 5e2c Delete type=0 #1030

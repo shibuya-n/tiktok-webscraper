@@ -1,36 +1,3 @@
-2026/07/24-16:04:28.720 50a8 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/24-16:04:28.720 50a8 Recovering log #380
-2026/07/24-16:04:28.721 50a8 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000380.log 
-2026/07/24-16:04:31.364 2cfc Compacting 1@1 + 1@2 files
-2026/07/24-16:04:31.375 2cfc Generated table #383@1: 729 keys, 25696 bytes
-2026/07/24-16:04:31.375 2cfc Compacted 1@1 + 1@2 files => 25696 bytes
-2026/07/24-16:04:31.385 2cfc compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/24-16:04:31.385 2cfc Delete type=2 #378
-2026/07/24-16:04:31.386 2cfc Delete type=2 #381
-2026/07/24-16:11:36.887 2cfc Level-0 table #385: started
-2026/07/24-16:11:36.911 2cfc Level-0 table #385: 1020474 bytes OK
-2026/07/24-16:11:36.918 2cfc Delete type=0 #380
-2026/07/24-16:11:39.857 2cfc Compacting 1@1 + 1@2 files
-2026/07/24-16:11:39.882 2cfc Generated table #386@1: 725 keys, 23181 bytes
-2026/07/24-16:11:39.882 2cfc Compacted 1@1 + 1@2 files => 23181 bytes
-2026/07/24-16:11:39.884 2cfc compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/24-16:11:39.884 2cfc Delete type=2 #383
-2026/07/24-16:11:39.884 2cfc Delete type=2 #385
-2026/07/24-16:24:34.847 2cfc Level-0 table #388: started
-2026/07/24-16:24:34.867 2cfc Level-0 table #388: 1008199 bytes OK
-2026/07/24-16:24:34.870 2cfc Delete type=0 #384
-2026/07/24-16:24:34.939 2cfc Compacting 1@1 + 1@2 files
-2026/07/24-16:24:34.950 2cfc Generated table #389@1: 1120 keys, 28931 bytes
-2026/07/24-16:24:34.950 2cfc Compacted 1@1 + 1@2 files => 28931 bytes
-2026/07/24-16:24:34.952 2cfc compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/24-21:29:44.505 2cfc Level-0 table #391: started
-2026/07/24-21:29:44.516 2cfc Level-0 table #391: 1136982 bytes OK
-2026/07/24-21:29:44.517 2cfc Delete type=2 #386
-2026/07/24-21:29:44.517 2cfc Delete type=0 #387
-2026/07/24-21:29:44.517 2cfc Delete type=2 #388
-2026/07/24-21:31:11.859 2cfc Compacting 1@1 + 1@2 files
-2026/07/24-21:31:11.868 2cfc Generated table #392@1: 725 keys, 22809 bytes
-2026/07/24-21:31:11.868 2cfc Compacted 1@1 + 1@2 files => 22809 bytes
-2026/07/24-21:31:11.874 2cfc compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/07/24-21:31:11.874 2cfc Delete type=2 #389
-2026/07/24-21:31:11.874 2cfc Delete type=2 #391
+2026/07/25-23:56:53.589 8fec Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/25-23:56:53.589 8fec Recovering log #464
+2026/07/25-23:56:53.601 8fec Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000464.log 
