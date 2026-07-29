@@ -2,7 +2,7 @@ TIKTOK_URL = "https://www.tiktok.com/foryou"
 SCAN_INTERVAL_MINUTES = 15
 VIDEOS_PER_RUN = 50
 
-SCAM_SCORE_THRESHOLD = 4
+SCAM_SCORE_THRESHOLD = 5
 GOOGLE_SHEET_NAME = "TikTok Scraper Data"
 CREDENTIALS_FILE = "credentials.json"
 COOKIES_FILE = "tiktok_cookies.json"
