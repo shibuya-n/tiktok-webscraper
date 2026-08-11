@@ -1,3 +1,60 @@
-2026/07/25-23:56:53.589 8fec Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/07/25-23:56:53.589 8fec Recovering log #464
-2026/07/25-23:56:53.601 8fec Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000464.log 
+2026/07/29-08:30:10.164 5714 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/29-08:30:10.165 5714 Recovering log #677
+2026/07/29-08:30:10.184 5714 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\IndexedDB\https_www.tiktok.com_0.indexeddb.leveldb/000677.log 
+2026/07/29-08:30:16.471 54f4 Level-0 table #682: started
+2026/07/29-08:30:16.500 54f4 Level-0 table #682: 1037080 bytes OK
+2026/07/29-08:30:16.504 54f4 Delete type=0 #677
+2026/07/29-08:30:19.021 54f4 Compacting 1@1 + 1@2 files
+2026/07/29-08:30:19.034 54f4 Generated table #683@1: 725 keys, 23201 bytes
+2026/07/29-08:30:19.034 54f4 Compacted 1@1 + 1@2 files => 23201 bytes
+2026/07/29-08:30:19.036 54f4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-08:40:12.572 54f4 Level-0 table #685: started
+2026/07/29-08:40:12.594 54f4 Level-0 table #685: 1010435 bytes OK
+2026/07/29-08:40:12.600 54f4 Delete type=2 #679
+2026/07/29-08:40:12.601 54f4 Delete type=0 #681
+2026/07/29-08:40:12.601 54f4 Delete type=2 #682
+2026/07/29-08:40:32.188 5714 Compacting 1@1 + 1@2 files
+2026/07/29-08:40:32.214 5714 Generated table #686@1: 1103 keys, 28942 bytes
+2026/07/29-08:40:32.214 5714 Compacted 1@1 + 1@2 files => 28942 bytes
+2026/07/29-08:40:32.216 5714 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-08:40:32.216 5714 Delete type=2 #683
+2026/07/29-08:40:32.217 5714 Delete type=2 #685
+2026/07/29-08:49:02.106 54f4 Level-0 table #688: started
+2026/07/29-08:49:02.127 54f4 Level-0 table #688: 1048719 bytes OK
+2026/07/29-08:49:02.130 54f4 Delete type=0 #684
+2026/07/29-08:49:16.312 54f4 Compacting 1@1 + 1@2 files
+2026/07/29-08:49:16.325 54f4 Generated table #689@1: 722 keys, 20038 bytes
+2026/07/29-08:49:16.326 54f4 Compacted 1@1 + 1@2 files => 20038 bytes
+2026/07/29-08:49:16.328 54f4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-08:58:33.058 54f4 Level-0 table #691: started
+2026/07/29-08:58:33.088 54f4 Level-0 table #691: 1010475 bytes OK
+2026/07/29-08:58:33.096 54f4 Delete type=2 #686
+2026/07/29-08:58:33.096 54f4 Delete type=0 #687
+2026/07/29-08:58:33.096 54f4 Delete type=2 #688
+2026/07/29-08:58:37.921 54f4 Compacting 1@1 + 1@2 files
+2026/07/29-08:58:37.947 54f4 Generated table #692@1: 725 keys, 23044 bytes
+2026/07/29-08:58:37.947 54f4 Compacted 1@1 + 1@2 files => 23044 bytes
+2026/07/29-08:58:37.949 54f4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-08:58:37.950 54f4 Delete type=2 #689
+2026/07/29-08:58:37.950 54f4 Delete type=2 #691
+2026/07/29-09:06:25.616 54f4 Level-0 table #694: started
+2026/07/29-09:06:25.634 54f4 Level-0 table #694: 1042402 bytes OK
+2026/07/29-09:06:25.637 54f4 Delete type=0 #690
+2026/07/29-09:06:45.945 54f4 Compacting 1@1 + 1@2 files
+2026/07/29-09:06:45.972 54f4 Generated table #695@1: 818 keys, 22552 bytes
+2026/07/29-09:06:45.972 54f4 Compacted 1@1 + 1@2 files => 22552 bytes
+2026/07/29-09:06:45.979 54f4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-09:06:45.980 54f4 Delete type=2 #692
+2026/07/29-09:06:45.980 54f4 Delete type=2 #694
+2026/07/29-09:15:52.145 54f4 Level-0 table #697: started
+2026/07/29-09:15:52.174 54f4 Level-0 table #697: 1039435 bytes OK
+2026/07/29-09:15:52.177 54f4 Delete type=0 #693
+2026/07/29-09:15:55.694 54f4 Compacting 1@1 + 1@2 files
+2026/07/29-09:15:55.707 54f4 Generated table #698@1: 725 keys, 23131 bytes
+2026/07/29-09:15:55.707 54f4 Compacted 1@1 + 1@2 files => 23131 bytes
+2026/07/29-09:15:55.709 54f4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/07/29-09:15:55.710 54f4 Delete type=2 #695
+2026/07/29-09:15:55.710 54f4 Delete type=2 #697
+2026/07/29-09:25:21.298 54f4 Level-0 table #700: started
+2026/07/29-09:25:21.326 54f4 Level-0 table #700: 1001666 bytes OK
+2026/07/29-09:25:21.328 54f4 Delete type=0 #696

@@ -1,7 +1,85 @@
-2026/07/25-23:56:52.854 5e2c Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/07/25-23:56:52.863 5e2c Recovering log #1030
-2026/07/25-23:56:52.863 5e2c Level-0 table #1033: started
-2026/07/25-23:56:52.888 5e2c Level-0 table #1033: 50455 bytes OK
-2026/07/25-23:56:52.889 5e2c Recovering log #1032
-2026/07/25-23:56:52.892 5e2c Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/001032.log 
-2026/07/25-23:56:52.918 5e2c Delete type=0 #1030
+2026/07/29-08:30:10.021 b00 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/07/29-08:30:10.025 b00 Recovering log #1366
+2026/07/29-08:30:10.025 b00 Level-0 table #1369: started
+2026/07/29-08:30:10.031 b00 Level-0 table #1369: 21959 bytes OK
+2026/07/29-08:30:10.032 b00 Recovering log #1368
+2026/07/29-08:30:10.034 b00 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/001368.log 
+2026/07/29-08:30:10.036 b00 Delete type=0 #1366
+2026/07/29-08:32:11.106 8244 Level-0 table #1371: started
+2026/07/29-08:32:11.123 8244 Level-0 table #1371: 54653 bytes OK
+2026/07/29-08:32:11.131 8244 Delete type=0 #1368
+2026/07/29-08:32:11.131 b00 Compacting 4@0 + 1@1 files
+2026/07/29-08:32:11.140 b00 Generated table #1372@0: 191 keys, 337025 bytes
+2026/07/29-08:32:11.140 b00 Compacted 4@0 + 1@1 files => 337025 bytes
+2026/07/29-08:32:11.142 b00 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/29-08:32:11.143 b00 Delete type=2 #1363
+2026/07/29-08:32:11.143 b00 Delete type=2 #1365
+2026/07/29-08:32:11.143 b00 Delete type=2 #1367
+2026/07/29-08:32:11.143 b00 Delete type=2 #1369
+2026/07/29-08:32:11.143 b00 Delete type=2 #1371
+2026/07/29-08:36:11.103 8244 Level-0 table #1374: started
+2026/07/29-08:36:11.120 8244 Level-0 table #1374: 22895 bytes OK
+2026/07/29-08:36:11.124 8244 Delete type=0 #1370
+2026/07/29-08:39:11.103 8244 Level-0 table #1376: started
+2026/07/29-08:39:11.120 8244 Level-0 table #1376: 22533 bytes OK
+2026/07/29-08:39:11.123 8244 Delete type=0 #1373
+2026/07/29-08:42:11.105 8244 Level-0 table #1378: started
+2026/07/29-08:42:11.124 8244 Level-0 table #1378: 22411 bytes OK
+2026/07/29-08:42:11.131 8244 Delete type=0 #1375
+2026/07/29-08:48:11.110 8244 Level-0 table #1380: started
+2026/07/29-08:48:11.128 8244 Level-0 table #1380: 27205 bytes OK
+2026/07/29-08:48:11.140 8244 Delete type=0 #1377
+2026/07/29-08:48:11.141 8244 Compacting 4@0 + 1@1 files
+2026/07/29-08:48:11.150 8244 Generated table #1381@0: 191 keys, 337033 bytes
+2026/07/29-08:48:11.150 8244 Compacted 4@0 + 1@1 files => 337033 bytes
+2026/07/29-08:48:11.152 8244 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/29-08:48:11.152 8244 Delete type=2 #1372
+2026/07/29-08:48:11.152 8244 Delete type=2 #1374
+2026/07/29-08:48:11.152 8244 Delete type=2 #1376
+2026/07/29-08:48:11.152 8244 Delete type=2 #1378
+2026/07/29-08:48:11.152 8244 Delete type=2 #1380
+2026/07/29-08:51:11.103 8244 Level-0 table #1383: started
+2026/07/29-08:51:11.109 8244 Level-0 table #1383: 21479 bytes OK
+2026/07/29-08:51:11.126 8244 Delete type=0 #1379
+2026/07/29-08:56:11.105 8244 Level-0 table #1385: started
+2026/07/29-08:56:11.125 8244 Level-0 table #1385: 27198 bytes OK
+2026/07/29-08:56:11.127 8244 Delete type=0 #1382
+2026/07/29-09:02:11.104 8244 Level-0 table #1387: started
+2026/07/29-09:02:11.121 8244 Level-0 table #1387: 27266 bytes OK
+2026/07/29-09:02:11.127 8244 Delete type=0 #1384
+2026/07/29-09:05:11.101 8244 Level-0 table #1389: started
+2026/07/29-09:05:11.117 8244 Level-0 table #1389: 22541 bytes OK
+2026/07/29-09:05:11.120 8244 Delete type=0 #1386
+2026/07/29-09:05:11.121 8244 Compacting 4@0 + 1@1 files
+2026/07/29-09:05:11.129 8244 Generated table #1390@0: 191 keys, 337035 bytes
+2026/07/29-09:05:11.129 8244 Compacted 4@0 + 1@1 files => 337035 bytes
+2026/07/29-09:05:11.131 8244 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/29-09:05:11.132 8244 Delete type=2 #1381
+2026/07/29-09:05:11.132 8244 Delete type=2 #1383
+2026/07/29-09:05:11.132 8244 Delete type=2 #1385
+2026/07/29-09:05:11.132 8244 Delete type=2 #1387
+2026/07/29-09:05:11.132 8244 Delete type=2 #1389
+2026/07/29-09:08:11.097 8244 Level-0 table #1392: started
+2026/07/29-09:08:11.117 8244 Level-0 table #1392: 22558 bytes OK
+2026/07/29-09:08:11.118 8244 Delete type=0 #1388
+2026/07/29-09:12:11.090 8244 Level-0 table #1394: started
+2026/07/29-09:12:11.108 8244 Level-0 table #1394: 21455 bytes OK
+2026/07/29-09:12:11.130 8244 Delete type=0 #1391
+2026/07/29-09:15:11.099 8244 Level-0 table #1396: started
+2026/07/29-09:15:11.105 8244 Level-0 table #1396: 22593 bytes OK
+2026/07/29-09:15:11.108 8244 Delete type=0 #1393
+2026/07/29-09:19:11.103 8244 Level-0 table #1398: started
+2026/07/29-09:19:11.124 8244 Level-0 table #1398: 21921 bytes OK
+2026/07/29-09:19:11.127 8244 Delete type=0 #1395
+2026/07/29-09:19:11.127 8244 Compacting 4@0 + 1@1 files
+2026/07/29-09:19:11.135 8244 Generated table #1399@0: 191 keys, 337015 bytes
+2026/07/29-09:19:11.135 8244 Compacted 4@0 + 1@1 files => 337015 bytes
+2026/07/29-09:19:11.137 8244 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/29-09:19:11.138 8244 Delete type=2 #1390
+2026/07/29-09:19:11.138 8244 Delete type=2 #1392
+2026/07/29-09:19:11.138 8244 Delete type=2 #1394
+2026/07/29-09:19:11.138 8244 Delete type=2 #1396
+2026/07/29-09:19:11.138 8244 Delete type=2 #1398
+2026/07/29-09:23:11.099 8244 Level-0 table #1401: started
+2026/07/29-09:23:11.105 8244 Level-0 table #1401: 22984 bytes OK
+2026/07/29-09:23:11.107 8244 Delete type=0 #1397
