@@ -66,6 +66,7 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
             ", ".join(reasons) if reasons else "N/A",
             video_data.get("bio",              "N/A"),
             video_data.get("bio_link",         "N/A"),
+            video_data.get("bio_link_type",     "N/A"),
             video_data.get("total_followers",  "N/A"),
             video_data.get("total_likes",      "N/A"),
             frame_urls_str,

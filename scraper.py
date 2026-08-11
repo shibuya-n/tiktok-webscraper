@@ -28,6 +28,8 @@ from config import (
     ENABLE_DRIVE_UPLOAD
 )
 
+from link_classifier import _unwrap_tiktok_redirect, classify_bio_link
+
 
 class TikTokScraper:
 
@@ -155,6 +157,7 @@ class TikTokScraper:
             
             print(f"  Bio: {video_data.get('bio', '')[:100] or 'None'}")
             print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
+            print(f"  Bio Link Type: {video_data.get('bio_link_type') or 'None'}")
             print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
             print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
             
@@ -435,7 +438,9 @@ class TikTokScraper:
             except:
                 bio = ""
 
-            link          = self._get_bio_link(new_page)
+            raw_link      = self._get_bio_link(new_page)
+            link          = _unwrap_tiktok_redirect(raw_link)
+            link_info     = classify_bio_link(raw_link)
             followers     = self._safe_text(new_page, "[data-e2e='followers-count']")
             total_likes   = self._safe_text(new_page, "[data-e2e='likes-count']")
 
@@ -444,6 +449,11 @@ class TikTokScraper:
             return {
                 "bio": bio.strip(),
                 "bio_link": link,
+                "bio_link_type": link_info["category"],
+                "bio_link_domain": link_info["resolved_domain"],
+                "bio_link_wrapped": link_info["was_wrapped"],
+                "bio_link_shortener": link_info["is_shortener"],
+                "bio_link_utm": link_info["has_utm_tracking"],
                 "total_followers": followers,
                 "total_likes": total_likes,
             }
