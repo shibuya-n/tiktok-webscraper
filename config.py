@@ -13,3 +13,8 @@ USER_DATA_DIR = "./browser_profile"
 DRIVE_FOLDER_ID = "1euCymqN5XyqvqIbtKkSLdMH8uwu9ftLb"
 ENABLE_DRIVE_UPLOAD = False
 DELAY_BETWEEN_VIDEOS_MS = 8000
+
+# Blacklist of TikTok usernames to ignore (verifiably not a scam)
+BLACKLIST = [
+    "thewatchkingnyc", "nicovanderhorst",
+] 

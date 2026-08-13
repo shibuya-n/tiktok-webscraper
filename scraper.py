@@ -25,10 +25,12 @@ from config import (
     SCROLL_WAIT_MS,
     USER_DATA_DIR,
     SCAM_SCORE_THRESHOLD,
-    ENABLE_DRIVE_UPLOAD
+    ENABLE_DRIVE_UPLOAD,
+    BLACKLIST
 )
 
 from link_classifier import _unwrap_tiktok_redirect, classify_bio_link
+
 
 
 class TikTokScraper:
@@ -139,6 +141,10 @@ class TikTokScraper:
                 fingerprint = (video_data["author"], video_data["description"])
                 if fingerprint == last_seen:
                     print("  [WARN] Still the same video after retry — logging anyway.")
+                if video_data["author"] in BLACKLIST:
+                    print(f"  [SKIP] Author '{video_data['author']}' is blacklisted — skipping.")
+                    self._scroll_to_next(page)
+                    continue
 
             last_seen = fingerprint
 
