@@ -14,7 +14,7 @@ from datetime import datetime
 from playwright.sync_api import sync_playwright
 
 from scam_detector import score_video, is_scam, get_scam_reasons, get_score_label
-from sheet_logger import log_to_sheet, get_log_count
+from sheet_logger import log_to_sheet, get_log_count, check_for_duplicates
 from config import (
     DELAY_BETWEEN_VIDEOS_MS,
     TIKTOK_URL,
@@ -144,7 +144,14 @@ class TikTokScraper:
                 if video_data["author"] in BLACKLIST:
                     print(f"  [SKIP] Author '{video_data['author']}' is blacklisted — skipping.")
                     self._scroll_to_next(page)
+                    i -= 1
                     continue
+                 # Check if we have recorded the same video before. If so, skip
+                if check_for_duplicates(video_data['url']):
+                    print(" [DUPLICATE] We have encountered the same video before — skipping.")
+                    i -= 1 
+                    continue
+                
 
             last_seen = fingerprint
 
@@ -158,6 +165,7 @@ class TikTokScraper:
             
             account = self._extract_account_page(page, video_data["author"])
             
+
             # add to video data dict
             video_data.update(account) 
             

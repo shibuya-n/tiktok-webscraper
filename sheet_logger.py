@@ -66,7 +66,7 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
             ", ".join(reasons) if reasons else "N/A",
             video_data.get("bio",              "N/A"),
             video_data.get("bio_link",         "N/A"),
-            video_data.get("bio_link_type",     "N/A"),
+            video_data.get("bio_link_type",    "N/A"),
             video_data.get("total_followers",  "N/A"),
             video_data.get("total_likes",      "N/A"),
             frame_urls_str,
@@ -86,3 +86,16 @@ def get_log_count() -> int:
     except Exception as e:
         print(f"  [ERROR] Could not fetch row count: {e}")
         return 0
+
+
+def check_for_duplicates(link) -> bool: 
+    sheet = get_sheet()
+    
+    # convert into set 
+    bio_links = set(sheet.col_values(4))
+    print(list(bio_links)[:10])
+    
+    if link in bio_links:
+        return True
+    else:
+        return False
