@@ -1,5 +1,33 @@
-2026/08/13-17:06:25.075 6760 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/13-17:06:25.080 6760 Recovering log #1426
-2026/08/13-17:06:25.082 6760 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/001426.log 
-2026/08/13-17:07:05.104 8c0c Level-0 table #1431: started
-2026/08/13-17:07:05.132 8c0c Level-0 table #1431: 61268 bytes OK
+2026/09/22-10:53:00.313 52c4 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/22-10:53:00.318 52c4 Recovering log #4
+2026/09/22-10:53:00.318 52c4 Level-0 table #7: started
+2026/09/22-10:53:00.324 52c4 Level-0 table #7: 27019 bytes OK
+2026/09/22-10:53:00.329 52c4 Delete type=0 #4
+2026/09/22-10:55:01.209 6258 Level-0 table #10: started
+2026/09/22-10:55:01.217 6258 Level-0 table #10: 46724 bytes OK
+2026/09/22-10:55:01.219 6258 Delete type=0 #8
+2026/09/22-11:03:01.214 52c4 Level-0 table #12: started
+2026/09/22-11:03:01.227 52c4 Level-0 table #12: 27982 bytes OK
+2026/09/22-11:03:01.230 52c4 Delete type=0 #9
+2026/09/22-11:10:01.208 6258 Level-0 table #14: started
+2026/09/22-11:10:01.217 6258 Level-0 table #14: 23489 bytes OK
+2026/09/22-11:10:01.219 6258 Delete type=0 #11
+2026/09/22-11:10:01.219 6258 Compacting 4@0 + 0@1 files
+2026/09/22-11:10:01.228 6258 Generated table #15@0: 44 keys, 45733 bytes
+2026/09/22-11:10:01.228 6258 Compacted 4@0 + 0@1 files => 45733 bytes
+2026/09/22-11:10:01.230 6258 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-11:10:01.231 6258 Delete type=2 #7
+2026/09/22-11:10:01.231 6258 Delete type=2 #10
+2026/09/22-11:10:01.231 6258 Delete type=2 #12
+2026/09/22-11:10:01.231 6258 Delete type=2 #14
+2026/09/22-11:17:01.217 6258 Level-0 table #17: started
+2026/09/22-11:17:01.224 6258 Level-0 table #17: 23304 bytes OK
+2026/09/22-11:17:01.226 6258 Delete type=0 #13
+2026/09/22-11:25:01.207 6258 Level-0 table #19: started
+2026/09/22-11:25:01.215 6258 Level-0 table #19: 28055 bytes OK
+2026/09/22-11:25:01.217 6258 Delete type=0 #16
+2026/09/22-11:31:01.216 6258 Level-0 table #21: started
+2026/09/22-11:31:01.224 6258 Level-0 table #21: 23232 bytes OK
+2026/09/22-11:31:01.226 6258 Delete type=0 #18
+2026/09/22-11:38:59.448 4b8c Level-0 table #23: started
+2026/09/22-11:38:59.465 4b8c Level-0 table #23: 28625 bytes OK

@@ -1,11 +1,37 @@
-2026/08/13-17:22:06.561 d20 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/13-17:22:06.570 d20 Recovering log #1426
-2026/08/13-17:22:06.570 d20 Level-0 table #1430: started
-2026/08/13-17:22:06.580 d20 Level-0 table #1430: 61268 bytes OK
-2026/08/13-17:22:06.581 d20 Recovering log #1430
-2026/08/13-17:22:06.584 d20 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/001430.log 
-2026/08/13-17:22:06.588 d20 Delete type=0 #1426
-2026/08/13-17:22:06.588 d20 Delete type=2 #1431
-2026/08/13-17:23:06.612 63a0 Level-0 table #1432: started
-2026/08/13-17:23:06.635 63a0 Level-0 table #1432: 52483 bytes OK
-2026/08/13-17:23:06.637 63a0 Delete type=0 #1430
+2026/09/22-11:54:03.726 74b8 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/22-11:54:03.734 74b8 Recovering log #20
+2026/09/22-11:54:03.734 74b8 Level-0 table #23: started
+2026/09/22-11:54:03.740 74b8 Level-0 table #23: 28625 bytes OK
+2026/09/22-11:54:03.741 74b8 Recovering log #22
+2026/09/22-11:54:03.745 74b8 Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000022.log 
+2026/09/22-11:54:03.747 74b8 Delete type=0 #20
+2026/09/22-11:54:03.750 3500 Compacting 4@0 + 1@1 files
+2026/09/22-11:54:03.764 3500 Generated table #24@0: 44 keys, 45637 bytes
+2026/09/22-11:54:03.764 3500 Compacted 4@0 + 1@1 files => 45637 bytes
+2026/09/22-11:54:03.766 3500 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-11:54:03.768 3500 Delete type=2 #15
+2026/09/22-11:54:03.768 3500 Delete type=2 #17
+2026/09/22-11:54:03.768 3500 Delete type=2 #19
+2026/09/22-11:54:03.768 3500 Delete type=2 #21
+2026/09/22-11:54:03.768 3500 Delete type=2 #23
+2026/09/22-11:56:04.489 3500 Level-0 table #26: started
+2026/09/22-11:56:04.496 3500 Level-0 table #26: 55282 bytes OK
+2026/09/22-11:56:04.498 3500 Delete type=0 #22
+2026/09/22-12:01:04.426 74b8 Level-0 table #28: started
+2026/09/22-12:01:04.436 74b8 Level-0 table #28: 22030 bytes OK
+2026/09/22-12:01:04.438 74b8 Delete type=0 #25
+2026/09/22-12:07:09.245 3500 Level-0 table #30: started
+2026/09/22-12:07:09.252 3500 Level-0 table #30: 27176 bytes OK
+2026/09/22-12:07:09.254 3500 Delete type=0 #27
+2026/09/22-12:13:04.341 3500 Level-0 table #32: started
+2026/09/22-12:13:04.348 3500 Level-0 table #32: 28051 bytes OK
+2026/09/22-12:13:04.350 3500 Delete type=0 #29
+2026/09/22-12:13:04.352 3500 Compacting 4@0 + 1@1 files
+2026/09/22-12:13:04.360 3500 Generated table #33@0: 44 keys, 48537 bytes
+2026/09/22-12:13:04.360 3500 Compacted 4@0 + 1@1 files => 48537 bytes
+2026/09/22-12:13:04.361 3500 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-12:13:04.363 3500 Delete type=2 #24
+2026/09/22-12:13:04.363 3500 Delete type=2 #26
+2026/09/22-12:13:04.363 3500 Delete type=2 #28
+2026/09/22-12:13:04.363 3500 Delete type=2 #30
+2026/09/22-12:13:04.363 3500 Delete type=2 #32

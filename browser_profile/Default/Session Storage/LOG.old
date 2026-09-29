@@ -1,6 +1,15 @@
-2026/08/13-17:06:25.152 6760 Reusing MANIFEST C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
-2026/08/13-17:06:25.153 6760 Recovering log #313
-2026/08/13-17:06:25.156 6760 Reusing old log C:\Users\Andy Duong\tiktok-webscraper\browser_profile\Default\Session Storage/000313.log 
-2026/08/13-17:06:31.937 8a88 Level-0 table #318: started
-2026/08/13-17:06:31.944 8a88 Level-0 table #318: 22827 bytes OK
-2026/08/13-17:06:31.972 8a88 Delete type=0 #313
+2026/09/22-10:53:00.416 52c4 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Session Storage/MANIFEST-000001
+2026/09/22-10:53:00.417 52c4 Recovering log #3
+2026/09/22-10:53:00.420 52c4 Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Session Storage/000003.log 
+2026/09/22-10:57:01.204 52c4 Level-0 table #5: started
+2026/09/22-10:57:01.213 52c4 Level-0 table #5: 23072 bytes OK
+2026/09/22-10:57:01.216 52c4 Delete type=0 #3
+2026/09/22-11:14:14.961 6258 Level-0 table #7: started
+2026/09/22-11:14:14.978 6258 Level-0 table #7: 23898 bytes OK
+2026/09/22-11:14:14.997 6258 Delete type=0 #4
+2026/09/22-11:29:01.211 52c4 Level-0 table #9: started
+2026/09/22-11:29:01.217 52c4 Level-0 table #9: 22855 bytes OK
+2026/09/22-11:29:01.220 52c4 Delete type=0 #6
+2026/09/22-11:38:59.428 6258 Level-0 table #11: started
+2026/09/22-11:38:59.434 6258 Level-0 table #11: 22086 bytes OK
+2026/09/22-11:38:59.438 6258 Delete type=0 #8
