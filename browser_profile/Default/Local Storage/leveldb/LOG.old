@@ -1,33 +1,37 @@
-2026/09/22-10:53:00.313 52c4 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/09/22-10:53:00.318 52c4 Recovering log #4
-2026/09/22-10:53:00.318 52c4 Level-0 table #7: started
-2026/09/22-10:53:00.324 52c4 Level-0 table #7: 27019 bytes OK
-2026/09/22-10:53:00.329 52c4 Delete type=0 #4
-2026/09/22-10:55:01.209 6258 Level-0 table #10: started
-2026/09/22-10:55:01.217 6258 Level-0 table #10: 46724 bytes OK
-2026/09/22-10:55:01.219 6258 Delete type=0 #8
-2026/09/22-11:03:01.214 52c4 Level-0 table #12: started
-2026/09/22-11:03:01.227 52c4 Level-0 table #12: 27982 bytes OK
-2026/09/22-11:03:01.230 52c4 Delete type=0 #9
-2026/09/22-11:10:01.208 6258 Level-0 table #14: started
-2026/09/22-11:10:01.217 6258 Level-0 table #14: 23489 bytes OK
-2026/09/22-11:10:01.219 6258 Delete type=0 #11
-2026/09/22-11:10:01.219 6258 Compacting 4@0 + 0@1 files
-2026/09/22-11:10:01.228 6258 Generated table #15@0: 44 keys, 45733 bytes
-2026/09/22-11:10:01.228 6258 Compacted 4@0 + 0@1 files => 45733 bytes
-2026/09/22-11:10:01.230 6258 compacted to: files[ 0 1 1 0 0 0 0 ]
-2026/09/22-11:10:01.231 6258 Delete type=2 #7
-2026/09/22-11:10:01.231 6258 Delete type=2 #10
-2026/09/22-11:10:01.231 6258 Delete type=2 #12
-2026/09/22-11:10:01.231 6258 Delete type=2 #14
-2026/09/22-11:17:01.217 6258 Level-0 table #17: started
-2026/09/22-11:17:01.224 6258 Level-0 table #17: 23304 bytes OK
-2026/09/22-11:17:01.226 6258 Delete type=0 #13
-2026/09/22-11:25:01.207 6258 Level-0 table #19: started
-2026/09/22-11:25:01.215 6258 Level-0 table #19: 28055 bytes OK
-2026/09/22-11:25:01.217 6258 Delete type=0 #16
-2026/09/22-11:31:01.216 6258 Level-0 table #21: started
-2026/09/22-11:31:01.224 6258 Level-0 table #21: 23232 bytes OK
-2026/09/22-11:31:01.226 6258 Delete type=0 #18
-2026/09/22-11:38:59.448 4b8c Level-0 table #23: started
-2026/09/22-11:38:59.465 4b8c Level-0 table #23: 28625 bytes OK
+2026/09/22-11:54:03.726 74b8 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/09/22-11:54:03.734 74b8 Recovering log #20
+2026/09/22-11:54:03.734 74b8 Level-0 table #23: started
+2026/09/22-11:54:03.740 74b8 Level-0 table #23: 28625 bytes OK
+2026/09/22-11:54:03.741 74b8 Recovering log #22
+2026/09/22-11:54:03.745 74b8 Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000022.log 
+2026/09/22-11:54:03.747 74b8 Delete type=0 #20
+2026/09/22-11:54:03.750 3500 Compacting 4@0 + 1@1 files
+2026/09/22-11:54:03.764 3500 Generated table #24@0: 44 keys, 45637 bytes
+2026/09/22-11:54:03.764 3500 Compacted 4@0 + 1@1 files => 45637 bytes
+2026/09/22-11:54:03.766 3500 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-11:54:03.768 3500 Delete type=2 #15
+2026/09/22-11:54:03.768 3500 Delete type=2 #17
+2026/09/22-11:54:03.768 3500 Delete type=2 #19
+2026/09/22-11:54:03.768 3500 Delete type=2 #21
+2026/09/22-11:54:03.768 3500 Delete type=2 #23
+2026/09/22-11:56:04.489 3500 Level-0 table #26: started
+2026/09/22-11:56:04.496 3500 Level-0 table #26: 55282 bytes OK
+2026/09/22-11:56:04.498 3500 Delete type=0 #22
+2026/09/22-12:01:04.426 74b8 Level-0 table #28: started
+2026/09/22-12:01:04.436 74b8 Level-0 table #28: 22030 bytes OK
+2026/09/22-12:01:04.438 74b8 Delete type=0 #25
+2026/09/22-12:07:09.245 3500 Level-0 table #30: started
+2026/09/22-12:07:09.252 3500 Level-0 table #30: 27176 bytes OK
+2026/09/22-12:07:09.254 3500 Delete type=0 #27
+2026/09/22-12:13:04.341 3500 Level-0 table #32: started
+2026/09/22-12:13:04.348 3500 Level-0 table #32: 28051 bytes OK
+2026/09/22-12:13:04.350 3500 Delete type=0 #29
+2026/09/22-12:13:04.352 3500 Compacting 4@0 + 1@1 files
+2026/09/22-12:13:04.360 3500 Generated table #33@0: 44 keys, 48537 bytes
+2026/09/22-12:13:04.360 3500 Compacted 4@0 + 1@1 files => 48537 bytes
+2026/09/22-12:13:04.361 3500 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/09/22-12:13:04.363 3500 Delete type=2 #24
+2026/09/22-12:13:04.363 3500 Delete type=2 #26
+2026/09/22-12:13:04.363 3500 Delete type=2 #28
+2026/09/22-12:13:04.363 3500 Delete type=2 #30
+2026/09/22-12:13:04.363 3500 Delete type=2 #32

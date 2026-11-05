@@ -6,6 +6,8 @@ from config import SCAN_INTERVAL_MINUTES
 
 scraper = TikTokScraper()
 
+
+
 def job():
     try:
         scraper.run()
