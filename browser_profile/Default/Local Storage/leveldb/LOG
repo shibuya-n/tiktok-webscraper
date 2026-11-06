@@ -1,3 +1,18 @@
-2026/11/05-13:06:30.410 742c Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/11/05-13:06:30.415 742c Recovering log #59
-2026/11/05-13:06:30.420 742c Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000059.log 
+2026/11/06-01:27:19.880 5ec0 Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/11/06-01:27:19.888 5ec0 Recovering log #78
+2026/11/06-01:27:19.894 5ec0 Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000078.log 
+2026/11/06-01:28:19.919 5ec0 Level-0 table #82: started
+2026/11/06-01:28:19.923 5ec0 Level-0 table #82: 41871 bytes OK
+2026/11/06-01:28:19.924 5ec0 Delete type=0 #78
+2026/11/06-01:29:20.920 80d8 Level-0 table #84: started
+2026/11/06-01:29:20.925 80d8 Level-0 table #84: 40863 bytes OK
+2026/11/06-01:29:20.926 80d8 Delete type=0 #81
+2026/11/06-01:29:20.927 80d8 Compacting 4@0 + 1@1 files
+2026/11/06-01:29:20.935 80d8 Generated table #85@0: 99 keys, 211879 bytes
+2026/11/06-01:29:20.935 80d8 Compacted 4@0 + 1@1 files => 211879 bytes
+2026/11/06-01:29:20.935 80d8 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/11/06-01:29:20.936 80d8 Delete type=2 #75
+2026/11/06-01:29:20.936 80d8 Delete type=2 #77
+2026/11/06-01:29:20.936 80d8 Delete type=2 #79
+2026/11/06-01:29:20.936 80d8 Delete type=2 #82
+2026/11/06-01:29:20.936 80d8 Delete type=2 #84

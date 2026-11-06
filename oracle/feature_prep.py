@@ -55,10 +55,10 @@ ORACLE_DOMAINS_CSV = os.environ.get(
 # ===================================================================
 
 print("\n1. Loading ranking data...")
-df_cisco = pd.read_csv(os.environ.get("ORACLE_CISCO_CSV", "C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\top-1m.csv"), names=['ranking','domain'])
+df_cisco = pd.read_csv(os.environ.get("ORACLE_CISCO_CSV", r"C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\top-1m.csv"), names=['ranking','domain'])
 dict_cisco = dict(zip(df_cisco['domain'], df_cisco['ranking']))
 
-df_majestic = pd.read_csv(os.environ.get("ORACLE_MAJESTIC_CSV", "C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\majestic_million.csv"))
+df_majestic = pd.read_csv(os.environ.get("ORACLE_MAJESTIC_CSV", r"C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\majestic_million.csv"))
 dict_majestic = dict(zip(df_majestic['Domain'], df_majestic['GlobalRank']))
 dict_majestic_tldrank = dict(zip(df_majestic['Domain'], df_majestic['TldRank']))
 dict_majestic_refsubnets = dict(zip(df_majestic['Domain'], df_majestic['RefSubNets']))
@@ -67,7 +67,7 @@ dict_majestic_refips = dict(zip(df_majestic['Domain'], df_majestic['RefIPs']))
 max_tldmajestic = max(dict_majestic_tldrank.values()) + 1
 max_cisco = len(dict_cisco) + 1
 max_majestic = len(dict_majestic) + 1
-tranco_path = os.environ.get("ORACLE_TRANCO_CSV", "C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\tranco_GQG5K.csv")  
+tranco_path = os.environ.get("ORACLE_TRANCO_CSV", r"C:\Users\aduon\Documents\GitHub\tiktok-webscraper\datasets\tranco_GQG5K.csv")  
 dict_tranco = {}
 max_tranco = None
 if os.path.exists(tranco_path):

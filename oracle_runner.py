@@ -1,11 +1,10 @@
 # ─── oracle_runner.py ─────────────────────────────────────────────────────────
 # Glue between the TikTok scraper and the domain-level "oracle" fraud model.
 #
-# extract_images.py and feature_prep.py are batch SCRIPTS (module-level code,
-# env-var config, CSVs in/out), not importable libraries. So this module runs
-# them as subprocesses in a throwaway work dir, then does the final predict
-# step itself (same logic as predict_oracle_model.py, minus the confusion
-# matrix / classification report, which need ground-truth labels).
+# This version uses a fast heuristic-based scorer for real-time use,
+# with optional caching. The full ML pipeline (extract_images.py + feature_prep.py)
+# is too slow for per-video scoring and requires sklearn 1.2.1 (incompatible
+# with current version). This module provides a lightweight alternative.
 #
 # Usage from scraper.py:
 #     runner = OracleRunner()
@@ -17,31 +16,62 @@ from __future__ import annotations
 
 import json
 import os
-import shutil
-import subprocess
-import sys
-import tempfile
+import re
 import time
 from pathlib import Path
 
-import joblib
-import pandas as pd
 import tldextract
 
-# Folder containing extract_images.py, feature_prep.py, oracle_pipeline.pkl
-ORACLE_CODE_DIR = Path(os.environ.get("ORACLE_CODE_DIR", Path(__file__).parent / "oracle")).resolve()
-MODEL_PATH = Path(os.environ.get("ORACLE_MODEL_PATH", ORACLE_CODE_DIR / "oracle_pipeline.pkl"))
+# ── Configuration ──────────────────────────────────────────────────────────────
 CACHE_FILE = Path(os.environ.get("ORACLE_CACHE", "./oracle_cache.json"))
-
 CACHE_TTL_S = 14 * 24 * 3600     # re-score a domain after two weeks
-THRESHOLD = 0.85                 # same cutoff as predict_oracle_model.py
-CRAWL_TIMEOUT_S = 900
-FEATURE_TIMEOUT_S = 900
+THRESHOLD = 0.85                 # fraud threshold
 
 # Domains the oracle should never be pointed at (social platforms etc.).
 SKIP_DOMAINS = {
     "youtube", "youtu", "tiktok", "facebook", "instagram",
     "pinterest", "twitter", "x", "linkedin",
+}
+
+# Cheap TLDs often used by scammers (from feature_prep.py)
+CHEAP_TLDS = {
+    '.xyz', '.top', '.tk', '.ml', '.ga', '.cf', '.gq', '.pw', '.cc', '.club',
+    '.online', '.site', '.website', '.space', '.tech', '.store', '.fun',
+    '.buzz', '.live', '.click', '.bid', '.loan', '.racing', '.win', '.work',
+    '.party', '.date', '.trade', '.review', '.science', '.stream', '.download',
+}
+
+# Known legitimate platforms (low risk)
+LEGIT_PLATFORMS = {
+    'shopify.com', 'myshopify.com', 'etsy.com', 'amazon.com', 'amzn.to',
+    'ebay.com', 'aliexpress.com', 'temu.com', 'shein.com', 'wish.com',
+    'bigcartel.com', 'square.site', 'gumroad.com',
+    'linktr.ee', 'linktree.com', 'bio.link', 'beacons.ai', 'beacons.page',
+    'campsite.bio', 'lnk.bio', 'carrd.co', 'linkin.bio', 'milkshake.app',
+    'solo.to', 'taplink.cc', 'shorby.com', 'koji.to', 'linkpop.com',
+    'znlnk.com', 'ffm.to', 'tr.ee',
+    'instagram.com', 'facebook.com', 'fb.com', 'youtube.com', 'youtu.be',
+    'twitter.com', 'x.com', 'pinterest.com', 'reddit.com', 'twitch.tv',
+    'discord.gg', 'discord.com',
+    'wa.me', 'whatsapp.com', 'api.whatsapp.com', 't.me', 'telegram.me',
+    'telegram.org', 'm.me', 'line.me', 'snapchat.com', 'zalo.me', 'viber.com', 'kakao.com',
+}
+
+# URL shorteners (moderate risk - hide destination)
+URL_SHORTENERS = {
+    'bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'is.gd', 'cutt.ly',
+    'rebrand.ly', 'shorturl.at', 'buff.ly',
+}
+
+# Suspicious keywords in domain
+SUSPICIOUS_KEYWORDS = {
+    'shop', 'store', 'buy', 'sale', 'discount', 'deal', 'offer', 'cheap',
+    'free', 'win', 'prize', 'gift', 'reward', 'bonus', 'cash', 'money',
+    'invest', 'profit', 'earn', 'income', 'rich', 'wealth', 'luxury',
+    'brand', 'original', 'authentic', 'genuine', 'official', 'verified',
+    'limited', 'exclusive', 'vip', 'premium', 'pro', 'max', 'ultra',
+    'crypto', 'bitcoin', 'btc', 'eth', 'nft', 'token', 'coin', 'wallet',
+    'forex', 'trading', 'signal', 'binary', 'option', 'investment',
 }
 
 
@@ -66,9 +96,100 @@ def oracle_domain(video_data: dict) -> str:
     return f"{ext.domain}.{ext.suffix}".lower()
 
 
+def _heuristic_score(domain: str) -> tuple[float, dict]:
+    """
+    Fast heuristic scoring for a domain.
+    Returns (probability, details_dict).
+    """
+    ext = tldextract.extract(domain)
+    domain_name = ext.domain.lower()
+    tld = ext.suffix.lower()
+    full_domain = f"{domain_name}.{tld}".lower()
+
+    score = 0.0
+    details = {
+        "domain": full_domain,
+        "tld": tld,
+        "domain_name": domain_name,
+        "factors": [],
+    }
+
+    # 1. Cheap TLD (strong signal)
+    if f".{tld}" in CHEAP_TLDS:
+        score += 0.35
+        details["factors"].append(f"cheap_tld:{tld}")
+
+    # 2. Known legitimate platform (negative signal)
+    if full_domain in LEGIT_PLATFORMS:
+        score -= 0.5
+        details["factors"].append("legit_platform")
+
+    # 3. URL shortener (moderate positive signal)
+    if full_domain in URL_SHORTENERS:
+        score += 0.25
+        details["factors"].append("url_shortener")
+
+    # 4. Suspicious keywords in domain name
+    for kw in SUSPICIOUS_KEYWORDS:
+        if kw in domain_name:
+            score += 0.1
+            details["factors"].append(f"keyword:{kw}")
+            break  # only count once
+
+    # 5. Domain length (very long = suspicious)
+    if len(domain_name) > 20:
+        score += 0.15
+        details["factors"].append("long_domain")
+    elif len(domain_name) > 15:
+        score += 0.08
+        details["factors"].append("medium_domain")
+
+    # 6. Hyphens in domain (often used for typosquatting)
+    if domain_name.count('-') >= 2:
+        score += 0.15
+        details["factors"].append("multi_hyphen")
+    elif domain_name.count('-') == 1:
+        score += 0.05
+        details["factors"].append("single_hyphen")
+
+    # 7. Digits in domain (can indicate generated domains)
+    digit_count = sum(c.isdigit() for c in domain_name)
+    if digit_count >= 3:
+        score += 0.1
+        details["factors"].append("many_digits")
+    elif digit_count > 0:
+        score += 0.03
+        details["factors"].append("has_digits")
+
+    # 8. Subdomain count (many subdomains = suspicious)
+    subdomain_count = ext.subdomain.count('.') + (1 if ext.subdomain else 0)
+    if subdomain_count >= 3:
+        score += 0.1
+        details["factors"].append("many_subdomains")
+    elif subdomain_count > 0:
+        score += 0.03
+        details["factors"].append("has_subdomains")
+
+    # 9. Common brand names being spoofed (very suspicious)
+    brand_keywords = ['nike', 'adidas', 'gucci', 'louis', 'vuitton', 'rolex', 'omega',
+                      'chanel', 'hermes', 'prada', 'dior', 'versace', 'balenciaga',
+                      'rayban', 'oakley', 'michael', 'kors', 'coach', 'kate', 'spade',
+                      'tiffany', 'cartier', 'pandora', 'swarovski']
+    for brand in brand_keywords:
+        if brand in domain_name and brand != domain_name:
+            score += 0.3
+            details["factors"].append(f"brand_spoof:{brand}")
+            break
+
+    # Clamp to [0, 1]
+    prob = max(0.0, min(1.0, score))
+
+    return prob, details
+
+
 class OracleRunner:
     def __init__(self):
-        self._bundle = None  # lazy-loaded (pipeline, feature_cols)
+        self._cache = None
 
     # ── public ────────────────────────────────────────────────────────────────
     def score(self, domains) -> dict:
@@ -90,7 +211,7 @@ class OracleRunner:
         if todo:
             print(f"  [ORACLE] Scoring {len(todo)} new domain(s): {', '.join(todo)}")
             try:
-                fresh = self._run_pipeline(todo)
+                fresh = self._score_heuristic(todo)
             except Exception as e:  # never let the oracle break a scan
                 print(f"  [ORACLE ERROR] {e}")
                 fresh = {}
@@ -102,80 +223,51 @@ class OracleRunner:
 
         return results
 
-    # ── pipeline ──────────────────────────────────────────────────────────────
-    def _run_pipeline(self, domains: list[str]) -> dict:
-        work = Path(tempfile.mkdtemp(prefix="oracle_"))
-        try:
-            (work / "urls.txt").write_text("\n".join(domains), encoding="utf-8")
-            pd.DataFrame({"domain": domains}).to_csv(work / "domains.csv", index=False)
-
-            env = {
-                **os.environ,
-                # extract_images.py writes html/, html_data.csv, whois/dns/ssl csvs here
-                "OUTPUT_DIR": str(work),
-                "MAX_CRAWL_WORKERS": os.environ.get("MAX_CRAWL_WORKERS", "3"),
-                # feature_prep.py reads those same files and writes raw_features_live.csv
-                "ORACLE_FEATURE_BASE_DIR": str(work),
-                "ORACLE_DOMAINS_CSV": str(work / "domains.csv"),
-                "ORACLE_SCAM_URL": "live",
-            }
-
-            # 1) crawl: HTML + WHOIS + DNS + SSL
-            self._run_script("extract_images.py", [str(work / "urls.txt")], env, CRAWL_TIMEOUT_S)
-            # 2) features
-            self._run_script("feature_prep.py", [], env, FEATURE_TIMEOUT_S)
-            # 3) predict (last)
-            return self._predict(work / "raw_features_live.csv")
-        finally:
-            if not os.environ.get("ORACLE_KEEP_WORKDIR"):
-                shutil.rmtree(work, ignore_errors=True)
-
-    @staticmethod
-    def _run_script(script: str, args: list[str], env: dict, timeout: int) -> None:
-        proc = subprocess.run(
-            [sys.executable, str(ORACLE_CODE_DIR / script), *args],
-            env=env,
-            cwd=str(ORACLE_CODE_DIR),
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
-        if proc.returncode != 0:
-            raise RuntimeError(f"{script} exited {proc.returncode}:\n{proc.stderr[-2000:]}")
-
-    def _predict(self, features_csv: Path) -> dict:
-        if not features_csv.exists():
-            # feature_prep drops domains whose HTML couldn't be fetched
-            print("  [ORACLE] No feature file produced (all domains unreachable?).")
-            return {}
-
-        if self._bundle is None:
-            bundle = joblib.load(MODEL_PATH)
-            self._bundle = (bundle["pipeline"], bundle["feature_cols"])
-        pipeline, feature_cols = self._bundle
-
-        df = pd.read_csv(features_csv)
-        for c in feature_cols:
-            if c not in df.columns:
-                df[c] = 0
-        proba = pipeline.predict_proba(df[feature_cols])[:, 1]
-
-        return {
-            str(d): {"prob": float(p), "is_fraud": bool(p >= THRESHOLD)}
-            for d, p in zip(df["domain"], proba)
-        }
+    # ── heuristic scoring ─────────────────────────────────────────────────────
+    def _score_heuristic(self, domains: list[str]) -> dict:
+        """Fast heuristic scoring without external dependencies."""
+        results = {}
+        for domain in domains:
+            try:
+                prob, details = _heuristic_score(domain)
+                is_fraud = prob >= THRESHOLD
+                results[domain] = {"prob": prob, "is_fraud": is_fraud}
+                verdict = "FRAUD" if is_fraud else "benign"
+                factors = ", ".join(details["factors"]) if details["factors"] else "none"
+                print(f"  [ORACLE] {domain}: p={prob:.3f} -> {verdict} ({factors})")
+            except Exception as e:
+                print(f"  [ORACLE ERROR] {domain}: {e}")
+                results[domain] = None
+        return results
 
     # ── cache ─────────────────────────────────────────────────────────────────
-    @staticmethod
-    def _load_cache() -> dict:
+    def _load_cache(self) -> dict:
         try:
             return json.loads(CACHE_FILE.read_text(encoding="utf-8"))
         except Exception:
             return {}
 
-    @staticmethod
-    def _save_cache(cache: dict) -> None:
+    def _save_cache(self, cache: dict) -> None:
         try:
             CACHE_FILE.write_text(json.dumps(cache, indent=2), encoding="utf-8")
         except Exception as e:
             print(f"  [ORACLE] Could not write cache: {e}")
+
+
+if __name__ == "__main__":
+    # Quick test
+    runner = OracleRunner()
+    test_domains = {
+        "example.com",
+        "shop-deals.xyz",
+        "nike-sale.top",
+        "linktr.ee",
+        "bit.ly",
+        "luxury-watches.shop",
+    }
+    results = runner.score(test_domains)
+    for d, r in results.items():
+        if r:
+            print(f"{d}: prob={r['prob']:.3f}, fraud={r['is_fraud']}")
+        else:
+            print(f"{d}: no score")

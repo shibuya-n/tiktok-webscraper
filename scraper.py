@@ -1,8 +1,8 @@
-# ─── scraper.py ───────────────────────────────────────────────────────────────
+# ---─ scraper.py ---------------------------------------------------------------------------------------------─
 # Core browser automation for the TikTok Scam Scanner.
 # Opens TikTok via Playwright, scrolls through videos, extracts metadata,
 # likes flagged videos, and passes data to the scam detector and sheet logger.
-# ──────────────────────────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------------------------------------------------------
 
 import json
 import os
@@ -34,6 +34,10 @@ from link_classifier import _unwrap_tiktok_redirect, classify_bio_link
 from oracle_runner import OracleRunner, oracle_domain
 
 
+def _safe_print(text: str) -> str:
+    """Replace non-ASCII characters for console output."""
+    return text.encode('ascii', 'replace').decode('ascii')
+
 
 class TikTokScraper:
 
@@ -42,7 +46,7 @@ class TikTokScraper:
 
     def run(self):
         timestamp = datetime.now().strftime("%H:%M:%S")
-        print(f"\n[{timestamp}] ── Starting scan ──────────────────────────────")
+        print(f"\n[{timestamp}] --- Starting scan ---------------------------------------------")
 
         with sync_playwright() as p:
             context, _, page = self._launch_browser(p)
@@ -54,7 +58,7 @@ class TikTokScraper:
                 context.close()  # close context, not browser
 
         total = get_log_count()
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] ── Scan complete. Total logged: {total} ────────────\n")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] --- Scan complete. Total logged: {total} ------------------\n")
 
     def _launch_browser(self, playwright):
         context = playwright.chromium.launch_persistent_context(
@@ -119,7 +123,7 @@ class TikTokScraper:
         last_seen = None  # (author, description) of the previously logged video
 
         for i in range(VIDEOS_PER_RUN):
-            print(f"\n  ── Video {i + 1}/{VIDEOS_PER_RUN} ──────────────────")
+            print(f"\n  --- Video {i + 1}/{VIDEOS_PER_RUN} ---------------------------")
 
             video_data = self._extract_video_data(page)
             
@@ -161,30 +165,36 @@ class TikTokScraper:
 
             last_seen = fingerprint
 
-            print(f"  Author : {video_data['author'] or 'Unknown'}")
-            print(f"  Caption: {video_data['description'][:100] or 'No caption'}...")
+            print(f"  Author : {_safe_print(video_data['author'] or 'Unknown')}")
+            print(f"  Caption: {_safe_print(video_data['description'][:100] or 'No caption')}...")
             print(f"  AD? : {video_data['isAd']}")
 
             score  = score_video(video_data)
             label  = get_score_label(score)
             print(f"  Score  : {score} ({label})")
-            
+
             account = self._extract_account_page(page, video_data["author"])
-            
+
 
             # add to video data dict
-            video_data.update(account) 
-            
-            print(f"  Bio: {video_data.get('bio', '')[:100] or 'None'}")
+            video_data.update(account)
+
+            print(f"  Bio: {_safe_print(video_data.get('bio', '')[:100] or 'None')}")
             print(f"  Bio Link: {video_data.get('bio_link') or 'None'}")
             print(f"  Bio Link Type: {video_data.get('bio_link_type') or 'None'}")
             print(f"  # of followers: {video_data.get('total_followers', 'N/A')}")
             print(f"  Total Likes: {video_data.get('total_likes', 'N/A')}")
             
-            if video_data['isAd']: 
-                video_data['bio_link'] = self._get_ad_link(page) 
+            if video_data['isAd']:
+                video_data['bio_link'] = self._get_ad_link(page)
 
-            # ── Oracle: domain-level fraud model on the bio/ad link ──────────
+            # Skip immediately if no website link found (bio link or ad link)
+            if not video_data.get('bio_link'):
+                print("  [SKIP] No website link found — skipping.")
+                self._scroll_to_next(page)
+                continue
+
+            # --- Oracle: domain-level fraud model on the bio/ad link ---------------
             oracle_result = self._score_link_with_oracle(video_data)
             video_data["oracle_domain"]   = oracle_result["domain"]
             video_data["oracle_prob"]     = oracle_result["prob"]
@@ -205,13 +215,13 @@ class TikTokScraper:
             
             
             if score > SCAM_SCORE_THRESHOLD:
-                
-                print(f"  ⚠️  FLAGGED — Reasons: {', '.join(reasons)}")
+
+                print(f"  [FLAGGED] Reasons: {_safe_print(', '.join(reasons))}")
                 page.wait_for_timeout(100000)
                 #self._like_video(page)
                 
             else:
-                print(f"  ✅ Clean")
+                print(f"  [CLEAN]")
 
             page.wait_for_timeout(DELAY_BETWEEN_VIDEOS_MS)
 
@@ -288,7 +298,7 @@ class TikTokScraper:
             page.wait_for_timeout(700)
 
             if is_liked():
-                print("  [LIKED] Like confirmed ✓")
+                print("  [LIKED] Like confirmed")
                 return
 
             print("  [WARN] Not liked after first click — retrying once.")
@@ -298,7 +308,7 @@ class TikTokScraper:
 
             page.wait_for_timeout(700)
             if is_liked():
-                print("  [LIKED] Like confirmed on retry ✓")
+                print("  [LIKED] Like confirmed on retry")
             else:
                 print("  [WARN] Still not liked after retry.")
 
@@ -385,7 +395,7 @@ class TikTokScraper:
             session_cookie = next((c for c in existing if c["name"] == "sessionid"), None)
 
             if session_cookie:
-                print("  [AUTH] Browser profile loaded with valid session ✓")
+                print("  [AUTH] Browser profile loaded with valid session")
             else:
                 print("  [WARN] Browser profile exists but session expired — re-seeding cookies.")
                 os.remove(flag_file)
@@ -422,7 +432,7 @@ class TikTokScraper:
             os.makedirs("./browser_profile", exist_ok=True)
             open(flag_file, "w").close()
 
-            print(f"  [AUTH] Cookies seeded into browser profile ✓")
+            print(f"  [AUTH] Cookies seeded into browser profile")
 
         except FileNotFoundError:
             print(f"  [WARN] '{COOKIES_FILE}' not found — running without login.")
@@ -646,7 +656,7 @@ class TikTokScraper:
             status = "no score (unreachable/failed)"
         else:
             status = f"p={prob:.3f} -> {'FRAUD' if video_data.get('oracle_is_fraud') else 'benign'}"
-        print(f"  Oracle : {dom or 'N/A'} | {status}")
+        print(f"  Oracle : {_safe_print(dom or 'N/A')} | {status}")
 
         try:
             path = "./oracle_log.csv"

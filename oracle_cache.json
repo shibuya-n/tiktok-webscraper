@@ -1,1 +1,212 @@
-{}
+{
+  "amazon.com": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "bit.ly": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.25,
+      "is_fraud": false
+    }
+  },
+  "example.com": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "gucci-bags.buzz": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.7,
+      "is_fraud": false
+    }
+  },
+  "instagram.com": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "linktr.ee": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "luxury-watches.shop": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.15000000000000002,
+      "is_fraud": false
+    }
+  },
+  "nike-sale.top": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.7999999999999999,
+      "is_fraud": false
+    }
+  },
+  "shop-deals.xyz": {
+    "ts": 1793943198.2156603,
+    "result": {
+      "prob": 0.49999999999999994,
+      "is_fraud": false
+    }
+  },
+  "heliomath.com": {
+    "ts": 1793944362.7555888,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "ghloi.shop": {
+    "ts": 1793944482.8702734,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "crownwellnorth.co": {
+    "ts": 1793944521.0810778,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "readymag.com": {
+    "ts": 1793944531.8031912,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "ffm.link": {
+    "ts": 1793944597.561099,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "ryzesuperfoods.com": {
+    "ts": 1793944632.5188136,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "shopatsableandstone.co": {
+    "ts": 1793944723.8655972,
+    "result": {
+      "prob": 0.18,
+      "is_fraud": false
+    }
+  },
+  "joycustomize.com": {
+    "ts": 1793944727.3022869,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "rise-festival.com": {
+    "ts": 1793944743.177145,
+    "result": {
+      "prob": 0.05,
+      "is_fraud": false
+    }
+  },
+  "lowkeyluxe.co": {
+    "ts": 1793944808.4894533,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "lecelestiau.shop": {
+    "ts": 1793944818.3772223,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "kuurth.com": {
+    "ts": 1793944853.2776206,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "savemyexams.com": {
+    "ts": 1793944996.3521955,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "cardsgamenight.com": {
+    "ts": 1793945133.8279617,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "dyenamik.com": {
+    "ts": 1793945180.6268754,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "hipcheckrecordpool.com": {
+    "ts": 1793945367.5577996,
+    "result": {
+      "prob": 0.08,
+      "is_fraud": false
+    }
+  },
+  "modmusemarket.co": {
+    "ts": 1793945416.3125632,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "novarexo.com": {
+    "ts": 1793945590.7922342,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  },
+  "shopatswiftshoppers.co": {
+    "ts": 1793945635.8887231,
+    "result": {
+      "prob": 0.18,
+      "is_fraud": false
+    }
+  },
+  "shopatkaleidocove.co": {
+    "ts": 1793945730.149348,
+    "result": {
+      "prob": 0.18,
+      "is_fraud": false
+    }
+  },
+  "numberartist.com": {
+    "ts": 1793945833.0426285,
+    "result": {
+      "prob": 0.0,
+      "is_fraud": false
+    }
+  }
+}

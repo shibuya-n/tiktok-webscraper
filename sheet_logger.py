@@ -11,11 +11,11 @@ SCOPES = [
 # Order MUST match the row built in log_to_sheet().
 HEADERS = [
     "Timestamp", "Author", "Description", "URL",
+    "Oracle Domain", "Oracle Prob", "Oracle Fraud",  # Oracle score columns - early for visibility
     "Hashtags", "Likes", "Comments", "Shares", "Is Ad",
     "Scam Score", "Risk Label", "Scam Reasons",
     "Bio", "Bio Link", "Bio Link Type", "Total Followers", "Total Likes",
     "Frame URLs", "Thumbnail",
-    "Oracle Domain", "Oracle Prob", "Oracle Fraud",
 ]
 
 URL_COL = HEADERS.index("URL") + 1  # gspread columns are 1-indexed
@@ -94,6 +94,9 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
             video_data.get("author",           "N/A"),
             video_data.get("description",      "N/A"),
             clean_url or "N/A",
+            video_data.get("oracle_domain") or "N/A",      # Oracle Domain
+            round(oracle_prob, 4) if oracle_prob is not None else "N/A",  # Oracle Prob
+            video_data.get("oracle_is_fraud", False),      # Oracle Fraud
             hashtags_str,
             video_data.get("likes",            "N/A"),
             video_data.get("comments",         "N/A"),
@@ -109,9 +112,6 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
             video_data.get("total_likes",      "N/A"),
             frame_urls_str,
             thumbnail_formula,
-            video_data.get("oracle_domain") or "N/A",
-            round(oracle_prob, 4) if oracle_prob is not None else "N/A",
-            video_data.get("oracle_is_fraud", False),
         ]
         assert len(row) == len(HEADERS), "row/HEADERS length mismatch"
 
@@ -122,7 +122,7 @@ def log_to_sheet(video_data: dict, score: int, label: str, reasons: list, frame_
         if clean_url and _seen_urls is not None:
             _seen_urls.add(clean_url)
 
-        print(f"  [LOGGED] Row added to '{GOOGLE_SHEET_NAME}' ✓")
+        print(f"  [LOGGED] Row added to '{GOOGLE_SHEET_NAME}'")
     except Exception as e:
         print(f"  [ERROR] Failed to log to Google Sheets: {e}")
 
