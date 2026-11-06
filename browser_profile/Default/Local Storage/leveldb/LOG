@@ -1,5 +1,3 @@
-2026/10/29-12:05:03.488 4ccc Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/10/29-12:05:03.501 4ccc Recovering log #31
-2026/10/29-12:05:03.504 4ccc Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000031.log 
-2026/10/29-12:06:40.990 4ccc Level-0 table #36: started
-2026/10/29-12:06:41.006 4ccc Level-0 table #36: 155618 bytes OK
+2026/11/05-13:06:30.410 742c Reusing MANIFEST C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/11/05-13:06:30.415 742c Recovering log #59
+2026/11/05-13:06:30.420 742c Reusing old log C:\Users\aduon\Documents\GitHub\tiktok-webscraper\browser_profile\Default\Local Storage\leveldb/000059.log 
